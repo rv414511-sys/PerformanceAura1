@@ -19,7 +19,6 @@ const Login = () => {
       return;
     }
     setLoading(true);
-    // Auth will be connected later
     await new Promise((r) => setTimeout(r, 1000));
     toast({ title: "Login functionality coming soon!" });
     setLoading(false);
@@ -30,12 +29,12 @@ const Login = () => {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-display font-bold text-xl">G</span>
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+              <span className="text-primary-foreground font-display font-bold text-xl">P</span>
             </div>
           </Link>
           <h1 className="font-display text-3xl font-bold text-foreground">Welcome Back</h1>
-          <p className="text-muted-foreground mt-2">Sign in to your account</p>
+          <p className="text-muted-foreground mt-2">Sign in to your PerformanceAura account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 rounded-2xl border border-border bg-card space-y-5">
