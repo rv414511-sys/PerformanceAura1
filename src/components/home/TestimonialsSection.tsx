@@ -3,10 +3,10 @@ import { Star, Quote } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
 
 const testimonials = [
-  { name: "Rahul Sharma", role: "CEO, TechVista Solutions", text: "GrowthPulse transformed our digital presence. Our ROAS increased by 4.5x within the first quarter. Their data-driven approach is genuinely world-class.", rating: 5, avatar: "RS" },
+  { name: "Rahul Sharma", role: "CEO, TechVista Solutions", text: "PerformanceAura transformed our digital presence. Our ROAS increased by 4.5x within the first quarter. Their data-driven approach is genuinely world-class.", rating: 5, avatar: "RS" },
   { name: "Priya Patel", role: "Founder, StyleBox India", text: "Their e-commerce expertise helped us scale from ₹10L to ₹1Cr monthly revenue in just 6 months. The team feels like an extension of our own.", rating: 5, avatar: "PP" },
   { name: "Amit Desai", role: "CMO, BuildRight Infra", text: "The most data-driven marketing team we've ever worked with. They reduced our cost-per-SQL by 75% while tripling our pipeline value.", rating: 5, avatar: "AD" },
-  { name: "Sneha Kulkarni", role: "Co-founder, PureVeda Naturals", text: "We were stuck at ₹18L/month for over a year. GrowthPulse broke through that ceiling and got us to ₹72L in 5 months. Absolute game-changers.", rating: 5, avatar: "SK" },
+  { name: "Sneha Kulkarni", role: "Co-founder, PureVeda Naturals", text: "We were stuck at ₹18L/month for over a year. PerformanceAura broke through that ceiling and got us to ₹72L in 5 months. Absolute game-changers.", rating: 5, avatar: "SK" },
   { name: "Vikram Reddy", role: "Director, CloudDesk Technologies", text: "Finally, a marketing agency that understands B2B. They didn't just get us leads — they got us meetings with decision-makers.", rating: 5, avatar: "VR" },
   { name: "Meera Joshi", role: "Head of Growth, FitNation", text: "Their creative strategy and audience targeting on Meta Ads is unmatched. We've never seen this level of granularity and care from an agency.", rating: 5, avatar: "MJ" },
 ];

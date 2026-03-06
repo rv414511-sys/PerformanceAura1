@@ -19,7 +19,6 @@ const Contact = () => {
       return;
     }
     setLoading(true);
-    // For now, simulate submission (will connect to DB later)
     await new Promise((r) => setTimeout(r, 1000));
     toast({ title: "Message sent!", description: "We'll get back to you within 24 hours." });
     setForm({ name: "", email: "", phone: "", company: "", message: "" });
@@ -28,7 +27,6 @@ const Contact = () => {
 
   return (
     <>
-      {/* Hero */}
       <section className="hero-gradient section-padding pt-32">
         <div className="container mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
@@ -36,9 +34,7 @@ const Contact = () => {
               Get In Touch
             </span>
             <h1 className="font-display text-4xl md:text-6xl font-bold text-primary-foreground mb-4">
-              Let's Start Your
-              <br />
-              <span className="text-gold">Growth Journey</span>
+              Let's Start Your<br /><span className="text-gold">Growth Journey</span>
             </h1>
           </motion.div>
         </div>
@@ -47,13 +43,12 @@ const Contact = () => {
       <section className="section-padding bg-background">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Contact Info */}
             <div className="space-y-8">
               <div>
                 <h3 className="font-display text-2xl font-bold text-foreground mb-6">Contact Information</h3>
                 <div className="space-y-4">
                   {[
-                    { icon: Mail, label: "Email", value: "hello@growthpulse.com" },
+                    { icon: Mail, label: "Email", value: "hello@performanceaura.com" },
                     { icon: Phone, label: "Phone", value: "+1 (555) 123-4567" },
                     { icon: MapPin, label: "Address", value: "123 Marketing Ave, Suite 400, New York, NY 10001" },
                   ].map((item, i) => (
@@ -71,7 +66,6 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Form */}
             <div className="lg:col-span-2">
               <form onSubmit={handleSubmit} className="p-8 rounded-2xl border border-border bg-card space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

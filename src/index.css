@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,79 +6,79 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 8%;
+    --background: 240 100% 98%;
+    --foreground: 0 0% 5%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 8%;
+    --card-foreground: 0 0% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 8%;
+    --popover-foreground: 0 0% 5%;
 
-    --primary: 156 100% 19%;
+    --primary: 249 68% 29%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 156 20% 95%;
-    --secondary-foreground: 156 100% 19%;
+    --secondary: 249 30% 95%;
+    --secondary-foreground: 249 68% 29%;
 
-    --muted: 150 10% 96%;
+    --muted: 240 20% 96%;
     --muted-foreground: 0 0% 40%;
 
-    --accent: 42 90% 55%;
-    --accent-foreground: 0 0% 8%;
+    --accent: 14 100% 57%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 150 10% 90%;
-    --input: 150 10% 90%;
-    --ring: 156 100% 19%;
+    --border: 240 10% 90%;
+    --input: 240 10% 90%;
+    --ring: 249 68% 29%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary: 249 68% 29%;
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 249 68% 40%;
 
-    --hero-gradient: linear-gradient(135deg, hsl(156 100% 14%) 0%, hsl(156 80% 22%) 50%, hsl(160 60% 28%) 100%);
-    --gold: 42 90% 55%;
-    --gold-foreground: 0 0% 8%;
-    --surface: 150 10% 98%;
+    --hero-gradient: linear-gradient(135deg, hsl(249 68% 24%) 0%, hsl(249 55% 35%) 50%, hsl(260 45% 42%) 100%);
+    --gold: 14 100% 57%;
+    --gold-foreground: 0 0% 100%;
+    --surface: 240 30% 97%;
   }
 
   .dark {
-    --background: 156 30% 5%;
+    --background: 249 30% 5%;
     --foreground: 0 0% 95%;
-    --card: 156 30% 8%;
+    --card: 249 30% 8%;
     --card-foreground: 0 0% 95%;
-    --popover: 156 30% 8%;
+    --popover: 249 30% 8%;
     --popover-foreground: 0 0% 95%;
-    --primary: 156 80% 40%;
+    --primary: 249 60% 55%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 156 20% 15%;
-    --secondary-foreground: 156 60% 70%;
-    --muted: 156 15% 15%;
+    --secondary: 249 20% 15%;
+    --secondary-foreground: 249 60% 70%;
+    --muted: 249 15% 15%;
     --muted-foreground: 0 0% 60%;
-    --accent: 42 90% 55%;
-    --accent-foreground: 0 0% 8%;
+    --accent: 14 100% 57%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 156 15% 18%;
-    --input: 156 15% 18%;
-    --ring: 156 80% 40%;
+    --border: 249 15% 18%;
+    --input: 249 15% 18%;
+    --ring: 249 60% 55%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary: 249 68% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 249 68% 50%;
   }
 }
 
@@ -92,22 +92,22 @@
   }
 
   h1, h2, h3, h4 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Poppins', sans-serif;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Poppins', sans-serif;
   }
 
   .font-body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Open Sans', sans-serif;
   }
 
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(156 100% 19%), hsl(42 90% 55%));
+    background-image: linear-gradient(135deg, hsl(249 68% 29%), hsl(14 100% 57%));
   }
 
   .hero-gradient {
@@ -116,8 +116,8 @@
 
   .glass {
     @apply backdrop-blur-md;
-    background: hsl(0 0% 100% / 0.85);
-    border: 1px solid hsl(0 0% 100% / 0.2);
+    background: hsl(240 100% 98% / 0.9);
+    border: 1px solid hsl(240 100% 98% / 0.3);
   }
 
   .section-padding {

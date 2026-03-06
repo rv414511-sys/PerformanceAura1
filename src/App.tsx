@@ -13,6 +13,13 @@ import Privacy from "./pages/Privacy";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
+import MetaAds from "./pages/services/MetaAds";
+import GoogleAds from "./pages/services/GoogleAds";
+import PerformanceMarketing from "./pages/services/PerformanceMarketing";
+import VideoEditing from "./pages/services/VideoEditing";
+import ContentWriting from "./pages/services/ContentWriting";
+import SocialMediaMarketing from "./pages/services/SocialMediaMarketing";
+import WebDesign from "./pages/services/WebDesign";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +35,13 @@ const App = () => (
           <Route path="/" element={<Layout><Index /></Layout>} />
           <Route path="/about" element={<Layout><About /></Layout>} />
           <Route path="/services" element={<Layout><Services /></Layout>} />
+          <Route path="/services/meta-ads" element={<Layout><MetaAds /></Layout>} />
+          <Route path="/services/google-ads" element={<Layout><GoogleAds /></Layout>} />
+          <Route path="/services/performance-marketing" element={<Layout><PerformanceMarketing /></Layout>} />
+          <Route path="/services/video-editing" element={<Layout><VideoEditing /></Layout>} />
+          <Route path="/services/content-writing" element={<Layout><ContentWriting /></Layout>} />
+          <Route path="/services/social-media-marketing" element={<Layout><SocialMediaMarketing /></Layout>} />
+          <Route path="/services/web-design" element={<Layout><WebDesign /></Layout>} />
           <Route path="/courses" element={<Layout><Courses /></Layout>} />
           <Route path="/contact" element={<Layout><Contact /></Layout>} />
           <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
