@@ -21,10 +21,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 glass">
       <div className="container mx-auto flex items-center justify-between h-16 px-6">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-display font-bold text-lg">P</span>
-          </div>
-          <span className="font-display text-xl font-bold text-foreground">PerformanceAura</span>
+          <img src={logoImg} alt="PerformanceAura" className="h-9 w-auto" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
