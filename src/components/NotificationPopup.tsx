@@ -38,11 +38,11 @@ const NotificationPopup = () => {
   const notif = notifications[current];
 
   return (
-    <div className="fixed bottom-6 left-6 z-50">
+    <div className="fixed top-20 right-6 z-50">
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          initial={{ opacity: 0, y: -40, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -20, scale: 0.95 }}
           transition={{ duration: 0.35 }}

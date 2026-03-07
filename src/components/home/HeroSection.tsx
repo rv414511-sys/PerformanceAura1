@@ -10,13 +10,13 @@ const HeroSection = () => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
           <span className="inline-block text-xs font-semibold tracking-widest uppercase text-gold bg-gold/10 px-4 py-1.5 rounded-full mb-6 border border-gold/20">
-            Premium Digital Marketing Agency
+            AI-Powered Digital Marketing Agency
           </span>
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-foreground leading-tight">
             Grow Your Brand<br /><span className="text-gold">Without Limits</span>
           </h1>
           <p className="mt-6 text-lg md:text-xl text-primary-foreground/80 max-w-xl leading-relaxed">
-            PerformanceAura crafts data-driven marketing strategies that deliver measurable ROI for e-commerce, D2C, and B2B brands.
+            PerformanceAura crafts AI-driven marketing strategies that deliver measurable ROI for e-commerce, D2C, and B2B brands.
           </p>
           <div className="flex flex-wrap gap-4 mt-10">
             <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90" asChild>
@@ -37,13 +37,13 @@ const HeroSection = () => (
                   <TrendingUp size={20} className="text-primary-foreground" />
                 </div>
                 <div>
-                  <div className="font-display text-2xl font-bold text-card-foreground">4.5x</div>
-                  <div className="text-xs text-muted-foreground">Avg. ROAS Growth</div>
+                  <div className="font-display text-2xl font-bold text-card-foreground">3.2x</div>
+                  <div className="text-xs text-muted-foreground">Avg. ROAS</div>
                 </div>
               </div>
             </div>
             <div className="absolute -top-4 -right-4 bg-accent text-accent-foreground rounded-full px-4 py-2 text-sm font-semibold shadow-lg">
-              ⭐ Trusted by 500+ Brands
+              ⭐ Trusted by 150+ Brands
             </div>
           </div>
         </motion.div>
