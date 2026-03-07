@@ -43,19 +43,19 @@ const FounderSection = () => (
             </p>
           </div>
           <p className="text-muted-foreground leading-relaxed">
-            With 10+ years in performance marketing and experience scaling brands from ₹0 to ₹100Cr in revenue, Ravi leads a team of 50+ marketing experts dedicated to driving measurable growth for businesses across India.
+            With 5+ years in performance marketing and experience scaling brands from ₹0 to ₹10Cr+ in revenue, Ravi leads a passionate team of marketing experts dedicated to driving measurable growth for businesses across India.
           </p>
           <div className="flex gap-6 mt-6">
             <div className="text-center">
-              <div className="font-display text-2xl font-bold text-primary">10+</div>
+              <div className="font-display text-2xl font-bold text-primary">5+</div>
               <div className="text-xs text-muted-foreground">Years Experience</div>
             </div>
             <div className="text-center">
-              <div className="font-display text-2xl font-bold text-primary">500+</div>
+              <div className="font-display text-2xl font-bold text-primary">150+</div>
               <div className="text-xs text-muted-foreground">Brands Scaled</div>
             </div>
             <div className="text-center">
-              <div className="font-display text-2xl font-bold text-primary">₹50Cr+</div>
+              <div className="font-display text-2xl font-bold text-primary">₹5Cr+</div>
               <div className="text-xs text-muted-foreground">Ad Spend Managed</div>
             </div>
           </div>

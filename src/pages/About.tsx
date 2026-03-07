@@ -1,18 +1,13 @@
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/SectionHeading";
 import { Target, Eye, Users, Award } from "lucide-react";
+import founderImg from "@/assets/founder-ravi.png";
 
 const values = [
   { icon: Target, title: "Data-Driven", desc: "Every decision backed by analytics and real performance data." },
   { icon: Eye, title: "Transparent", desc: "Full visibility into your campaigns, spend, and results." },
   { icon: Users, title: "Client-First", desc: "Your success is our success. We treat your budget like our own." },
   { icon: Award, title: "Excellence", desc: "We never settle. Continuous testing and optimization is in our DNA." },
-];
-
-const team = [
-  { name: "Ravi Verma", role: "Founder & CEO", bio: "10+ years in performance marketing. Founded PerformanceAura to make premium digital marketing accessible to ambitious brands." },
-  { name: "Sneha Kapoor", role: "Head of Paid Media", bio: "Google & Meta certified. Managed over ₹100Cr in ad spend across industries." },
-  { name: "Vikram Singh", role: "Creative Director", bio: "Award-winning creative strategist with a passion for conversion-focused design." },
 ];
 
 const About = () => (
@@ -27,7 +22,7 @@ const About = () => (
             We Build Brands That<br /><span className="text-gold">Dominate Markets</span>
           </h1>
           <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto">
-            PerformanceAura is a premium digital marketing agency that helps ambitious brands scale through data-driven performance marketing.
+            PerformanceAura is a premium AI-powered digital marketing agency that helps ambitious brands scale through data-driven performance marketing.
           </p>
         </motion.div>
       </div>
@@ -37,8 +32,8 @@ const About = () => (
       <div className="container mx-auto max-w-3xl">
         <SectionHeading badge="Our Story" title="Born From a Mission to Deliver Real Results" />
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-muted-foreground text-center space-y-4 text-lg">
-          <p>Founded in 2019, PerformanceAura was born out of frustration with marketing agencies that promised the world but delivered vanity metrics. We set out to build an agency where every rupee spent is accountable, every strategy is backed by data, and every client sees real, measurable growth.</p>
-          <p>Today, we serve 500+ brands across e-commerce, D2C, B2B, and B2C verticals — managing over ₹50 Crore in annual ad spend with an average ROAS of 3.2x.</p>
+          <p>Founded in 2021, PerformanceAura was born out of frustration with marketing agencies that promised the world but delivered vanity metrics. We set out to build an agency where every rupee spent is accountable, every strategy is backed by data, and every client sees real, measurable growth.</p>
+          <p>Today, we serve 150+ brands across e-commerce, D2C, B2B, and B2C verticals — managing over ₹5 Crore in annual ad spend with an average ROAS of 3.2x.</p>
         </motion.div>
       </div>
     </section>
@@ -62,18 +57,22 @@ const About = () => (
 
     <section className="section-padding bg-background">
       <div className="container mx-auto">
-        <SectionHeading badge="Our Team" title="Meet the Growth Experts" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {team.map((m, i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="text-center p-8 rounded-xl border border-border bg-card">
-              <div className="w-20 h-20 rounded-full bg-secondary flex items-center justify-center mx-auto mb-4">
-                <span className="font-display text-2xl font-bold text-primary">{m.name.charAt(0)}</span>
-              </div>
-              <h3 className="font-display text-xl font-semibold text-card-foreground">{m.name}</h3>
-              <p className="text-sm text-primary font-medium mb-2">{m.role}</p>
-              <p className="text-sm text-muted-foreground">{m.bio}</p>
-            </motion.div>
-          ))}
+        <SectionHeading badge="Our Founder" title="Meet the Growth Expert" />
+        <div className="max-w-3xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col md:flex-row items-center gap-8 p-8 rounded-2xl border border-border bg-card">
+            <img
+              src={founderImg}
+              alt="Ravi Verma — Founder & CEO of PerformanceAura"
+              className="w-40 h-40 rounded-2xl object-cover object-top shadow-lg border border-border"
+            />
+            <div className="text-center md:text-left">
+              <h3 className="font-display text-2xl font-bold text-card-foreground">Ravi Verma</h3>
+              <p className="text-sm text-primary font-semibold mb-3">Founder & CEO</p>
+              <p className="text-muted-foreground leading-relaxed">
+                With 5+ years in performance marketing and experience scaling brands from ₹0 to ₹10Cr+ in revenue, Ravi founded PerformanceAura to make premium digital marketing accessible to every ambitious brand. He leads a team of marketing experts dedicated to driving measurable growth for businesses across India.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

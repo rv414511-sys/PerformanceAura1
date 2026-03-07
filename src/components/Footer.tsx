@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
+import logoImg from "@/assets/logo.png";
 
 const serviceLinks = [
   { label: "Meta Ads", to: "/services/meta-ads" },
@@ -17,12 +18,9 @@ const Footer = () => {
       <div className="container mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-primary-foreground flex items-center justify-center">
-                <span className="text-primary font-display font-bold text-lg">P</span>
-              </div>
-              <span className="font-display text-xl font-bold">PerformanceAura</span>
-            </div>
+            <Link to="/" className="flex items-center gap-2 mb-4">
+              <img src={logoImg} alt="PerformanceAura" className="h-8 w-auto brightness-0 invert" />
+            </Link>
             <p className="text-primary-foreground/70 text-sm leading-relaxed">
               We drive measurable growth for ambitious brands through data-driven digital marketing strategies.
             </p>
@@ -66,11 +64,11 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-sm text-primary-foreground/70">
                 <MapPin size={16} className="mt-0.5 shrink-0" />
-                <span>123 Marketing Ave, Suite 400, New York, NY 10001</span>
+                <span>Noida, Uttar Pradesh, India</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-primary-foreground/70">
                 <Phone size={16} className="shrink-0" />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 98765 43210</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-primary-foreground/70">
                 <Mail size={16} className="shrink-0" />
