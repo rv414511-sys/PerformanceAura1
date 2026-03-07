@@ -46,6 +46,7 @@ const App = () => (
           <Route path="/services/web-design" element={<Layout><WebDesign /></Layout>} />
           <Route path="/courses" element={<Layout><Courses /></Layout>} />
           <Route path="/blog" element={<Layout><Blog /></Layout>} />
+          <Route path="/blog/:slug" element={<Layout><BlogPost /></Layout>} />
           <Route path="/contact" element={<Layout><Contact /></Layout>} />
           <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
           <Route path="*" element={<NotFound />} />
