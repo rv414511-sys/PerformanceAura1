@@ -30,12 +30,20 @@ const courses = [
     topics: ["Marketing funnels", "Multi-channel attribution", "CRO techniques", "Analytics & reporting"],
   },
   {
-    title: "E-commerce Growth Accelerator",
-    duration: "8 Weeks",
-    students: "900+",
-    price: "₹16,999",
-    desc: "Everything you need to scale your online store's revenue and profitability.",
-    topics: ["Product feed optimization", "Dynamic ads", "Email marketing", "Retention strategies"],
+    title: "AI Automation Course",
+    duration: "6 Weeks",
+    students: "800+",
+    price: "₹17,999",
+    desc: "Automate your marketing workflows using AI tools — from lead gen to customer nurturing.",
+    topics: ["AI chatbots", "Workflow automation", "AI content generation", "Lead scoring with AI"],
+  },
+  {
+    title: "Digital Marketing with AI",
+    duration: "12 Weeks",
+    students: "1,500+",
+    price: "₹24,999",
+    desc: "The ultimate program combining traditional digital marketing with cutting-edge AI strategies.",
+    topics: ["AI ad optimization", "Predictive analytics", "AI copywriting", "Smart bidding with AI"],
   },
 ];
 
@@ -52,7 +60,7 @@ const Courses = () => {
             <h1 className="font-display text-4xl md:text-6xl font-bold text-primary-foreground mb-4">
               Master Digital Marketing
               <br />
-              <span className="text-gold">With Industry Experts</span>
+              <span className="text-gold">With AI & Industry Experts</span>
             </h1>
             <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto">
               Practical, hands-on courses designed to give you real-world skills and results.

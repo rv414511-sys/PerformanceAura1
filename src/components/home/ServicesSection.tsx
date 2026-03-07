@@ -18,8 +18,8 @@ const ServicesSection = () => (
     <div className="container mx-auto">
       <SectionHeading
         badge="What We Do"
-        title="Services That Drive Growth"
-        subtitle="From strategy to execution, we handle every aspect of your digital marketing."
+        title="AI-Powered Services That Drive Growth"
+        subtitle="From strategy to execution, we combine AI intelligence with human creativity to handle every aspect of your digital marketing."
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((service, i) => (
