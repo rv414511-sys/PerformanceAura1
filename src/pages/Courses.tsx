@@ -60,7 +60,7 @@ const Courses = () => {
             <h1 className="font-display text-4xl md:text-6xl font-bold text-primary-foreground mb-4">
               Master Digital Marketing
               <br />
-              <span className="text-gold">With Industry Experts</span>
+              <span className="text-gold">With AI & Industry Experts</span>
             </h1>
             <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto">
               Practical, hands-on courses designed to give you real-world skills and results.

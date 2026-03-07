@@ -10,7 +10,7 @@ const values = [
 ];
 
 const team = [
-  { name: "Aditya Verma", role: "Founder & CEO", bio: "10+ years in performance marketing. Previously led growth at a unicorn startup." },
+  { name: "Ravi Verma", role: "Founder & CEO", bio: "10+ years in performance marketing. Founded PerformanceAura to make premium digital marketing accessible to ambitious brands." },
   { name: "Sneha Kapoor", role: "Head of Paid Media", bio: "Google & Meta certified. Managed over ₹100Cr in ad spend across industries." },
   { name: "Vikram Singh", role: "Creative Director", bio: "Award-winning creative strategist with a passion for conversion-focused design." },
 ];
