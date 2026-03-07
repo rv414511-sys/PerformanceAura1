@@ -12,6 +12,7 @@ import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
 import MetaAds from "./pages/services/MetaAds";
 import GoogleAds from "./pages/services/GoogleAds";
