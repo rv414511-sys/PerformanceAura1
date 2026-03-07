@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
+import logoImg from "@/assets/logo.png";
 
 const serviceLinks = [
   { label: "Meta Ads", to: "/services/meta-ads" },
