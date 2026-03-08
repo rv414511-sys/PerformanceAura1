@@ -19,7 +19,10 @@ const defaultServices = [
 
 const ServicesSection = () => {
   const { value: data } = useSetting("services");
-  const services = data?.items?.length ? data.items : defaultServices;
+  const sourceServices = data?.items?.length ? data.items : defaultServices;
+  const services = sourceServices.some((s: any) => s.slug === "ai-automation")
+    ? sourceServices
+    : [...sourceServices, defaultServices.find((s) => s.slug === "ai-automation")!];
 
   return (
     <section className="section-padding bg-background">

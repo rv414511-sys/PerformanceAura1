@@ -33,7 +33,10 @@ const Services = () => {
     ...pageData,
   };
 
-  const services = servicesData?.items?.length ? servicesData.items : defaultServices;
+  const sourceServices = servicesData?.items?.length ? servicesData.items : defaultServices;
+  const services = sourceServices.some((s: any) => s.slug === "ai-automation")
+    ? sourceServices
+    : [...sourceServices, defaultServices.find((s) => s.slug === "ai-automation")!];
 
   const getIcon = (name: string): LucideIcon => iconMap[name] || (LucideIcons as any)[name] || Target;
 
