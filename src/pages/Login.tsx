@@ -12,7 +12,7 @@ import logoImg from "@/assets/logo.png";
 
 const Login = () => {
   const { toast } = useToast();
-  const { signIn, isAdmin } = useAuth();
+  const { signIn, resendVerification } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
