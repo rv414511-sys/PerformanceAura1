@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Save, Loader2, Plus, Trash2, Eye, EyeOff, ChevronUp, ChevronDown } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
+import CustomSectionBuilder, { type CustomSection, newCustomSection } from "@/components/admin/CustomSectionBuilder";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -114,6 +115,7 @@ const AdminSettings = () => {
   const [colors, setColors] = useState({ primary_h: "249", primary_s: "68", primary_l: "29", accent_h: "14", accent_s: "100", accent_l: "57", primary_hex: "#1a0f5e", accent_hex: "#ff6b2b" });
   const [sections, setSections] = useState(defaultSections);
   const [sectionAnimations, setSectionAnimations] = useState<Record<string, string>>({});
+  const [customSections, setCustomSections] = useState<CustomSection[]>([]);
 
   // ─── Initialize with DEFAULTS when DB is empty ───
   useEffect(() => {
@@ -159,6 +161,9 @@ const AdminSettings = () => {
     }
     if (settings.section_animations?.value) {
       setSectionAnimations(settings.section_animations.value);
+    }
+    if (settings.custom_sections?.value?.items?.length) {
+      setCustomSections(settings.custom_sections.value.items);
     }
   }, [settings]);
 
@@ -230,14 +235,14 @@ const AdminSettings = () => {
 
       <Tabs defaultValue="sections" className="w-full">
         <TabsList className="flex flex-wrap h-auto gap-1 mb-6 bg-muted p-1 rounded-xl">
-          {["sections", "general", "hero", "stats", "services", "problems", "solutions", "process", "founder", "case-studies", "faq", "cta", "brands", "colors", "animations"].map((t) => (
+          {["sections", "custom-builder", "general", "hero", "stats", "services", "problems", "solutions", "process", "founder", "case-studies", "faq", "cta", "brands", "colors", "animations"].map((t) => (
             <TabsTrigger key={t} value={t} className="text-xs capitalize">{t.replace("-", " ")}</TabsTrigger>
           ))}
         </TabsList>
 
         {/* ═══ SECTIONS ═══ */}
         <TabsContent value="sections">
-          <Section title="📑 Homepage Sections" desc="Sections ko show/hide karein aur order change karein. Drag to reorder.">
+          <Section title="📑 Homepage Sections" desc="Sections ko show/hide karein, order change karein. Custom sections bhi yahan add karein.">
             <div className="space-y-2">
               {sections.map((sec, i) => (
                 <div key={sec.id} className="flex items-center gap-3 p-3 rounded-lg border border-border bg-muted/30">
@@ -249,7 +254,10 @@ const AdminSettings = () => {
                       <ChevronDown size={14} />
                     </Button>
                   </div>
-                  <span className="text-sm font-medium text-foreground flex-1">{sec.label}</span>
+                  <span className="text-sm font-medium text-foreground flex-1">
+                    {sec.label}
+                    {sec.id.startsWith("custom-") && <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded">Custom</span>}
+                  </span>
                   <div className="flex items-center gap-2">
                     {sec.visible ? <Eye size={14} className="text-primary" /> : <EyeOff size={14} className="text-muted-foreground" />}
                     <Switch checked={sec.visible} onCheckedChange={(checked) => {
@@ -258,9 +266,31 @@ const AdminSettings = () => {
                       setSections(arr);
                     }} />
                   </div>
+                  {sec.id.startsWith("custom-") && (
+                    <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setSections(sections.filter((_, j) => j !== i))}>
+                      <Trash2 size={14} className="text-destructive" />
+                    </Button>
+                  )}
                 </div>
               ))}
             </div>
+
+            {/* Add custom sections from the builder into the homepage order */}
+            {customSections.length > 0 && (
+              <div className="mt-4">
+                <p className="text-xs font-semibold text-muted-foreground mb-2">Custom sections ko homepage mein add karein:</p>
+                <div className="flex flex-wrap gap-2">
+                  {customSections
+                    .filter(cs => !sections.some(s => s.id === `custom-${cs.id}`))
+                    .map(cs => (
+                      <Button key={cs.id} variant="outline" size="sm" onClick={() => setSections([...sections, { id: `custom-${cs.id}`, label: cs.name, visible: true }])}>
+                        <Plus size={14} className="mr-1" /> {cs.name}
+                      </Button>
+                    ))}
+                </div>
+              </div>
+            )}
+
             <SaveBtn onClick={() => saveMutation.mutate({ key: "homepage_sections", value: { items: sections } })} />
           </Section>
         </TabsContent>
@@ -591,6 +621,14 @@ const AdminSettings = () => {
               ))}
             </div>
             <SaveBtn onClick={() => saveMutation.mutate({ key: "section_animations", value: sectionAnimations })} />
+          </Section>
+        </TabsContent>
+
+        {/* ═══ CUSTOM SECTION BUILDER ═══ */}
+        <TabsContent value="custom-builder">
+          <Section title="🏗️ Custom Sections Builder" desc="Naye sections banayein — template choose karein, blocks add karein (heading, text, image, button). Ye sections homepage ke existing sections ke saath dikhenge.">
+            <CustomSectionBuilder sections={customSections} onChange={setCustomSections} />
+            <SaveBtn onClick={() => saveMutation.mutate({ key: "custom_sections", value: { items: customSections } })} />
           </Section>
         </TabsContent>
       </Tabs>

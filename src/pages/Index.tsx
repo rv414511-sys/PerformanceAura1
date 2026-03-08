@@ -11,6 +11,7 @@ import TestimonialsSection from "@/components/home/TestimonialsSection";
 import FAQSection from "@/components/home/FAQSection";
 import CTASection from "@/components/home/CTASection";
 import FounderSection from "@/components/home/FounderSection";
+import CustomSectionRenderer from "@/components/home/CustomSectionRenderer";
 import { motion } from "framer-motion";
 
 const sectionComponentMap: Record<string, React.ComponentType> = {
@@ -55,15 +56,26 @@ const defaultSections = [
 const Index = () => {
   const { value: sectionsData } = useSetting("homepage_sections");
   const { value: animationsData } = useSetting("section_animations");
+  const { value: customSectionsData } = useSetting("custom_sections");
   
   const sections = sectionsData?.items?.length ? sectionsData.items : defaultSections;
   const animations = animationsData || {};
+  const customSections = customSectionsData?.items || [];
 
   return (
     <>
       {sections
         .filter((sec: any) => sec.visible !== false)
         .map((sec: any) => {
+          // Check if it's a custom section
+          if (sec.id.startsWith("custom-")) {
+            const customId = sec.id.replace("custom-", "");
+            const customSection = customSections.find((cs: any) => cs.id === customId);
+            if (!customSection) return null;
+            return <CustomSectionRenderer key={sec.id} section={customSection} />;
+          }
+
+          // Built-in section
           const Component = sectionComponentMap[sec.id];
           if (!Component) return null;
           
