@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import logoImg from "@/assets/logo.png";
 
 // After login, admins go to /admin, others go to /
@@ -24,9 +25,11 @@ const Login = () => {
       toast({ title: "Please fill in all fields", variant: "destructive" });
       return;
     }
+
     setLoading(true);
     const { error } = await signIn(email, password);
     setLoading(false);
+
     if (error) {
       const isInvalidCreds = error.message?.toLowerCase?.().includes("invalid login credentials");
       toast({
@@ -36,10 +39,18 @@ const Login = () => {
           : undefined,
         variant: "destructive",
       });
-    } else {
-      toast({ title: "Welcome back!" });
-      navigate("/");
+      return;
     }
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data: isAdmin } = await supabase.rpc("has_role", { _user_id: user.id, _role: "admin" });
+      toast({ title: "Welcome back!" });
+      navigate(isAdmin ? "/admin" : "/");
+      return;
+    }
+
+    navigate("/");
   };
 
   return (
