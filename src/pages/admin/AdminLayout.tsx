@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { LayoutDashboard, FileText, Star, Users, BookOpen, Download, CreditCard, MessageSquare, LogOut, Home, Settings, Menu, X } from "lucide-react";
+import { LayoutDashboard, FileText, Star, Users, BookOpen, Download, CreditCard, MessageSquare, LogOut, Home, Settings, Menu, X, FileEdit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
   { label: "Dashboard", to: "/admin", icon: LayoutDashboard },
+  { label: "Pages", to: "/admin/pages", icon: FileEdit },
   { label: "Blog Posts", to: "/admin/blogs", icon: FileText },
   { label: "Reviews", to: "/admin/reviews", icon: Star },
   { label: "Courses", to: "/admin/courses", icon: BookOpen },

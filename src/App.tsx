@@ -29,6 +29,7 @@ import WebDesign from "./pages/services/WebDesign";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminBlogs from "./pages/admin/AdminBlogs";
+import AdminPages from "./pages/admin/AdminPages";
 import AdminReviews from "./pages/admin/AdminReviews";
 import AdminLeads from "./pages/admin/AdminLeads";
 import AdminCourses from "./pages/admin/AdminCourses";
@@ -53,6 +54,7 @@ const App = () => (
             {/* Admin */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
+              <Route path="pages" element={<AdminPages />} />
               <Route path="blogs" element={<AdminBlogs />} />
               <Route path="reviews" element={<AdminReviews />} />
               <Route path="leads" element={<AdminLeads />} />

@@ -349,7 +349,7 @@ const AdminSettings = () => {
 
         {/* ═══ SERVICES ═══ */}
         <TabsContent value="services">
-          <Section title="🔧 Services" desc="Individually add, edit, ya delete karein — ek service add karne se baaki nahi jayengi">
+          <Section title="🔧 Services" desc="Individually add, edit, ya delete karein — custom image bhi upload kar sakte hain icon ke liye">
             {services.map((s, i) => (
               <div key={i} className="p-4 border border-border rounded-xl space-y-3 bg-muted/30">
                 <div className="flex justify-between items-center">
@@ -362,6 +362,7 @@ const AdminSettings = () => {
                 </div>
                 <Textarea placeholder="Short description" value={s.desc} onChange={(e) => { const n = [...services]; n[i] = { ...n[i], desc: e.target.value }; setServices(n); }} rows={2} />
                 <Input placeholder="Icon name (Target, BarChart3, Film, PenTool, Share2, Monitor, Star)" value={s.icon} onChange={(e) => { const n = [...services]; n[i] = { ...n[i], icon: e.target.value }; setServices(n); }} />
+                <ImageUpload value={(s as any).image_url || ""} onChange={(url) => { const n = [...services]; n[i] = { ...n[i], image_url: url } as any; setServices(n); }} folder="services" label="Custom Icon Image (optional — icon ke jagah ye image dikhegi)" />
               </div>
             ))}
             <Button variant="outline" size="sm" onClick={() => setServices([...services, { title: "", slug: "", desc: "", icon: "Star" }])}><Plus size={14} className="mr-1" /> Add Service</Button>
