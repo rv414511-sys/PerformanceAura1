@@ -11,6 +11,7 @@ const defaultServices = [
   { icon: "Target", title: "Meta Ads", slug: "meta-ads", desc: "Precision-targeted campaigns on Facebook & Instagram that convert audiences into customers.", image_url: "" },
   { icon: "BarChart3", title: "Google Ads", slug: "google-ads", desc: "High-intent search and display campaigns that capture ready-to-buy customers.", image_url: "" },
   { icon: "TrendingUp", title: "Performance Marketing", slug: "performance-marketing", desc: "ROI-focused strategies with transparent reporting and continuous optimization.", image_url: "" },
+  { icon: "Star", title: "AI Automation", slug: "ai-automation", desc: "Automate repetitive marketing workflows with AI systems for faster growth and lower costs.", image_url: "" },
   { icon: "Film", title: "Video Editing", slug: "video-editing", desc: "Professional video content for ads, social media, and brand storytelling.", image_url: "" },
   { icon: "PenTool", title: "Content Writing", slug: "content-writing", desc: "SEO-optimized content that ranks, engages, and converts your audience.", image_url: "" },
   { icon: "Share2", title: "Social Media Marketing", slug: "social-media-marketing", desc: "Strategic social management that builds communities and drives sales.", image_url: "" },
@@ -32,7 +33,10 @@ const Services = () => {
     ...pageData,
   };
 
-  const services = servicesData?.items?.length ? servicesData.items : defaultServices;
+  const sourceServices = servicesData?.items?.length ? servicesData.items : defaultServices;
+  const services = sourceServices.some((s: any) => s.slug === "ai-automation")
+    ? sourceServices
+    : [...sourceServices, defaultServices.find((s) => s.slug === "ai-automation")!];
 
   const getIcon = (name: string): LucideIcon => iconMap[name] || (LucideIcons as any)[name] || Target;
 

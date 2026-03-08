@@ -26,6 +26,7 @@ import VideoEditing from "./pages/services/VideoEditing";
 import ContentWriting from "./pages/services/ContentWriting";
 import SocialMediaMarketing from "./pages/services/SocialMediaMarketing";
 import WebDesign from "./pages/services/WebDesign";
+import AIAutomation from "./pages/services/AIAutomation";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminBlogs from "./pages/admin/AdminBlogs";
@@ -76,6 +77,7 @@ const App = () => (
             <Route path="/services/content-writing" element={<Layout><ContentWriting /></Layout>} />
             <Route path="/services/social-media-marketing" element={<Layout><SocialMediaMarketing /></Layout>} />
             <Route path="/services/web-design" element={<Layout><WebDesign /></Layout>} />
+            <Route path="/services/ai-automation" element={<Layout><AIAutomation /></Layout>} />
             <Route path="/courses" element={<Layout><Courses /></Layout>} />
             <Route path="/blog" element={<Layout><Blog /></Layout>} />
             <Route path="/blog/:slug" element={<Layout><BlogPost /></Layout>} />
