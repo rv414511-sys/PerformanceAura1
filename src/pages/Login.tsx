@@ -8,9 +8,11 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import logoImg from "@/assets/logo.png";
 
+// After login, admins go to /admin, others go to /
+
 const Login = () => {
   const { toast } = useToast();
-  const { signIn } = useAuth();
+  const { signIn, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,6 +31,7 @@ const Login = () => {
       toast({ title: error.message, variant: "destructive" });
     } else {
       toast({ title: "Welcome back!" });
+      // Small delay to let auth state update
       navigate("/");
     }
   };

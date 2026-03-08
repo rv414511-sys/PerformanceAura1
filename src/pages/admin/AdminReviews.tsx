@@ -34,7 +34,7 @@ const AdminReviews = () => {
         if (error) throw error;
       }
     },
-    onSuccess: () => { toast({ title: editId ? "Review updated" : "Review created" }); qc.invalidateQueries({ queryKey: ["admin-reviews"] }); resetForm(); },
+    onSuccess: () => { toast({ title: editId ? "✅ Review updated!" : "✅ Review added!" }); qc.invalidateQueries({ queryKey: ["admin-reviews"] }); resetForm(); },
     onError: (e: any) => toast({ title: "Error", description: e.message, variant: "destructive" }),
   });
 
@@ -53,29 +53,42 @@ const AdminReviews = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="font-display text-2xl font-bold text-foreground">Client Reviews</h1>
+        <div>
+          <h1 className="font-display text-2xl font-bold text-foreground">⭐ Client Reviews</h1>
+          <p className="text-sm text-muted-foreground mt-1">Client reviews add karein — yeh homepage par dikhenge</p>
+        </div>
         <Button onClick={() => { resetForm(); setShowForm(!showForm); }}>{showForm ? <><X size={14} className="mr-1" /> Cancel</> : <><Plus size={14} className="mr-1" /> Add Review</>}</Button>
       </div>
       {showForm && (
         <div className="p-6 rounded-xl border border-border bg-card mb-6 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input placeholder="Client Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-            <Input placeholder="Company" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} />
+            <div className="space-y-1">
+              <label className="text-sm font-medium">Client Name *</label>
+              <Input placeholder="Client ka naam" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+            </div>
+            <div className="space-y-1">
+              <label className="text-sm font-medium">Company</label>
+              <Input placeholder="Company ka naam" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} />
+            </div>
           </div>
-          <Textarea placeholder="Testimonial text" value={form.text} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={3} />
-          <div className="flex items-center gap-4">
+          <div className="space-y-1">
+            <label className="text-sm font-medium">Testimonial *</label>
+            <Textarea placeholder="Client ne kya kaha..." value={form.text} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={3} />
+          </div>
+          <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-1">
+              <span className="text-sm font-medium mr-2">Rating:</span>
               {[1,2,3,4,5].map((n) => (
                 <button key={n} onClick={() => setForm({ ...form, rating: n })} className="p-0.5">
-                  <Star size={18} className={n <= form.rating ? "fill-gold text-gold" : "text-muted-foreground"} />
+                  <Star size={20} className={n <= form.rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"} />
                 </button>
               ))}
             </div>
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-sm cursor-pointer">
               <input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} /> Published
             </label>
             <Button onClick={() => saveMutation.mutate()} disabled={!form.name || !form.text || saveMutation.isPending}>
-              <Check size={14} className="mr-1" /> {editId ? "Update" : "Create"}
+              <Check size={14} className="mr-1" /> {editId ? "Update" : "Add Review"}
             </Button>
           </div>
         </div>
@@ -88,7 +101,7 @@ const AdminReviews = () => {
                 <div className="flex items-center gap-2">
                   <h3 className="font-semibold text-foreground">{r.name}</h3>
                   <span className="text-xs text-muted-foreground">{r.company}</span>
-                  <div className="flex gap-0.5">{Array.from({ length: r.rating }).map((_, j) => <Star key={j} size={12} className="fill-gold text-gold" />)}</div>
+                  <div className="flex gap-0.5">{Array.from({ length: r.rating }).map((_, j) => <Star key={j} size={12} className="fill-yellow-400 text-yellow-400" />)}</div>
                 </div>
                 <p className="text-sm text-muted-foreground mt-1 line-clamp-1">{r.text}</p>
               </div>
@@ -98,7 +111,7 @@ const AdminReviews = () => {
               </div>
             </div>
           ))}
-          {reviews?.length === 0 && <p className="text-muted-foreground text-center py-8">No reviews yet.</p>}
+          {reviews?.length === 0 && <p className="text-muted-foreground text-center py-8">Koi review nahi hai abhi.</p>}
         </div>
       )}
     </div>
