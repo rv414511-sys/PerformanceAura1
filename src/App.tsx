@@ -26,6 +26,7 @@ import VideoEditing from "./pages/services/VideoEditing";
 import ContentWriting from "./pages/services/ContentWriting";
 import SocialMediaMarketing from "./pages/services/SocialMediaMarketing";
 import WebDesign from "./pages/services/WebDesign";
+import AIAutomation from "./pages/services/AIAutomation";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminBlogs from "./pages/admin/AdminBlogs";
