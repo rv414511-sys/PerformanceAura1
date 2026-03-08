@@ -1,3 +1,4 @@
+import { useSetting } from "@/hooks/useSiteSettings";
 import HeroSection from "@/components/home/HeroSection";
 import BrandSlider from "@/components/home/BrandSlider";
 import StatsSection from "@/components/home/StatsSection";
@@ -10,22 +11,77 @@ import TestimonialsSection from "@/components/home/TestimonialsSection";
 import FAQSection from "@/components/home/FAQSection";
 import CTASection from "@/components/home/CTASection";
 import FounderSection from "@/components/home/FounderSection";
+import { motion } from "framer-motion";
 
-const Index = () => (
-  <>
-    <HeroSection />
-    <BrandSlider />
-    <StatsSection />
-    <ProblemSection />
-    <SolutionSection />
-    <ServicesSection />
-    <ProcessSection />
-    <FounderSection />
-    <CaseStudySection />
-    <TestimonialsSection />
-    <FAQSection />
-    <CTASection />
-  </>
-);
+const sectionComponentMap: Record<string, React.ComponentType> = {
+  hero: HeroSection,
+  brands: BrandSlider,
+  stats: StatsSection,
+  problems: ProblemSection,
+  solutions: SolutionSection,
+  services: ServicesSection,
+  process: ProcessSection,
+  founder: FounderSection,
+  "case-studies": CaseStudySection,
+  testimonials: TestimonialsSection,
+  faq: FAQSection,
+  cta: CTASection,
+};
+
+const animationVariants: Record<string, any> = {
+  "fade-up": { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 } },
+  "fade-in": { initial: { opacity: 0 }, whileInView: { opacity: 1 } },
+  "slide-left": { initial: { opacity: 0, x: -50 }, whileInView: { opacity: 1, x: 0 } },
+  "slide-right": { initial: { opacity: 0, x: 50 }, whileInView: { opacity: 1, x: 0 } },
+  "scale": { initial: { opacity: 0, scale: 0.9 }, whileInView: { opacity: 1, scale: 1 } },
+  "none": {},
+};
+
+const defaultSections = [
+  { id: "hero", visible: true },
+  { id: "brands", visible: true },
+  { id: "stats", visible: true },
+  { id: "problems", visible: true },
+  { id: "solutions", visible: true },
+  { id: "services", visible: true },
+  { id: "process", visible: true },
+  { id: "founder", visible: true },
+  { id: "case-studies", visible: true },
+  { id: "testimonials", visible: true },
+  { id: "faq", visible: true },
+  { id: "cta", visible: true },
+];
+
+const Index = () => {
+  const { value: sectionsData } = useSetting("homepage_sections");
+  const { value: animationsData } = useSetting("section_animations");
+  
+  const sections = sectionsData?.items?.length ? sectionsData.items : defaultSections;
+  const animations = animationsData || {};
+
+  return (
+    <>
+      {sections
+        .filter((sec: any) => sec.visible !== false)
+        .map((sec: any) => {
+          const Component = sectionComponentMap[sec.id];
+          if (!Component) return null;
+          
+          const anim = animations[sec.id] || "fade-up";
+          const variant = animationVariants[anim];
+          
+          if (anim === "none" || !variant?.initial) {
+            return <Component key={sec.id} />;
+          }
+          
+          return (
+            <motion.div key={sec.id} {...variant} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+              <Component />
+            </motion.div>
+          );
+        })}
+    </>
+  );
+};
 
 export default Index;
