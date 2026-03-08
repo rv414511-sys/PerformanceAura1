@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Save, Loader2, Plus, Trash2, Eye, EyeOff, ChevronUp, ChevronDown } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
+import CustomSectionBuilder, { type CustomSection, newCustomSection } from "@/components/admin/CustomSectionBuilder";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
