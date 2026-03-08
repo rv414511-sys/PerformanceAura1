@@ -12,7 +12,7 @@ import logoImg from "@/assets/logo.png";
 
 const Login = () => {
   const { toast } = useToast();
-  const { signIn, isAdmin } = useAuth();
+  const { signIn, resendVerification } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,10 +28,16 @@ const Login = () => {
     const { error } = await signIn(email, password);
     setLoading(false);
     if (error) {
-      toast({ title: error.message, variant: "destructive" });
+      const isInvalidCreds = error.message?.toLowerCase?.().includes("invalid login credentials");
+      toast({
+        title: isInvalidCreds ? "Login failed" : error.message,
+        description: isInvalidCreds
+          ? "Ya to password galat hai ya email verify nahi hui. Signup ke baad verification mail confirm karo."
+          : undefined,
+        variant: "destructive",
+      });
     } else {
       toast({ title: "Welcome back!" });
-      // Small delay to let auth state update
       navigate("/");
     }
   };
@@ -57,6 +63,25 @@ const Login = () => {
           </div>
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Signing in..." : "Sign In"}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={async () => {
+              if (!email) {
+                toast({ title: "Pehle email enter kijiye", variant: "destructive" });
+                return;
+              }
+              const { error } = await resendVerification(email);
+              if (error) {
+                toast({ title: "Verification mail resend failed", description: error.message, variant: "destructive" });
+              } else {
+                toast({ title: "Verification email sent", description: "Inbox/spam check kijiye." });
+              }
+            }}
+          >
+            Resend Verification Email
           </Button>
           <p className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
