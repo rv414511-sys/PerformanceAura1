@@ -242,7 +242,7 @@ const AdminSettings = () => {
 
         {/* ═══ SECTIONS ═══ */}
         <TabsContent value="sections">
-          <Section title="📑 Homepage Sections" desc="Sections ko show/hide karein aur order change karein. Drag to reorder.">
+          <Section title="📑 Homepage Sections" desc="Sections ko show/hide karein, order change karein. Custom sections bhi yahan add karein.">
             <div className="space-y-2">
               {sections.map((sec, i) => (
                 <div key={sec.id} className="flex items-center gap-3 p-3 rounded-lg border border-border bg-muted/30">
@@ -254,7 +254,10 @@ const AdminSettings = () => {
                       <ChevronDown size={14} />
                     </Button>
                   </div>
-                  <span className="text-sm font-medium text-foreground flex-1">{sec.label}</span>
+                  <span className="text-sm font-medium text-foreground flex-1">
+                    {sec.label}
+                    {sec.id.startsWith("custom-") && <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded">Custom</span>}
+                  </span>
                   <div className="flex items-center gap-2">
                     {sec.visible ? <Eye size={14} className="text-primary" /> : <EyeOff size={14} className="text-muted-foreground" />}
                     <Switch checked={sec.visible} onCheckedChange={(checked) => {
@@ -263,9 +266,31 @@ const AdminSettings = () => {
                       setSections(arr);
                     }} />
                   </div>
+                  {sec.id.startsWith("custom-") && (
+                    <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setSections(sections.filter((_, j) => j !== i))}>
+                      <Trash2 size={14} className="text-destructive" />
+                    </Button>
+                  )}
                 </div>
               ))}
             </div>
+
+            {/* Add custom sections from the builder into the homepage order */}
+            {customSections.length > 0 && (
+              <div className="mt-4">
+                <p className="text-xs font-semibold text-muted-foreground mb-2">Custom sections ko homepage mein add karein:</p>
+                <div className="flex flex-wrap gap-2">
+                  {customSections
+                    .filter(cs => !sections.some(s => s.id === `custom-${cs.id}`))
+                    .map(cs => (
+                      <Button key={cs.id} variant="outline" size="sm" onClick={() => setSections([...sections, { id: `custom-${cs.id}`, label: cs.name, visible: true }])}>
+                        <Plus size={14} className="mr-1" /> {cs.name}
+                      </Button>
+                    ))}
+                </div>
+              </div>
+            )}
+
             <SaveBtn onClick={() => saveMutation.mutate({ key: "homepage_sections", value: { items: sections } })} />
           </Section>
         </TabsContent>
