@@ -1,7 +1,8 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SectionHeading from "@/components/SectionHeading";
+import { useSetting } from "@/hooks/useSiteSettings";
 
-const faqs = [
+const defaultFaqs = [
   { q: "How quickly can I expect results?", a: "Most clients see measurable improvements within 2-3 weeks of campaign launch. Significant ROI gains typically appear by month 2, with full optimization and scaling kicking in by month 3." },
   { q: "What's the minimum ad budget you work with?", a: "We recommend a minimum monthly ad spend of ₹1 lakh to see meaningful results. However, our strategies are designed to scale — most clients increase their budget within 60 days after seeing positive ROAS." },
   { q: "Do you work with specific industries only?", a: "We specialize in e-commerce, D2C, and B2B companies, but our data-driven approach works across industries. We've delivered results in fashion, health & wellness, SaaS, real estate, education, and more." },
@@ -12,28 +13,25 @@ const faqs = [
   { q: "Can I see my campaign performance in real time?", a: "Absolutely. Every client gets access to a live dashboard showing all key metrics — spend, ROAS, CPA, conversions, and more. Plus, you'll receive weekly reports with insights and action items." },
 ];
 
-const FAQSection = () => (
-  <section className="section-padding bg-background">
-    <div className="container mx-auto max-w-3xl">
-      <SectionHeading
-        badge="FAQs"
-        title="Got Questions? We've Got Answers"
-        subtitle="Everything you need to know before getting started."
-      />
-      <Accordion type="single" collapsible className="space-y-3">
-        {faqs.map((faq, i) => (
-          <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-xl px-6 data-[state=open]:bg-card">
-            <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline text-sm md:text-base">
-              {faq.q}
-            </AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm leading-relaxed">
-              {faq.a}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </div>
-  </section>
-);
+const FAQSection = () => {
+  const { value: data } = useSetting("faqs");
+  const faqs = data?.items?.length ? data.items : defaultFaqs;
+
+  return (
+    <section className="section-padding bg-background">
+      <div className="container mx-auto max-w-3xl">
+        <SectionHeading badge="FAQs" title="Got Questions? We've Got Answers" subtitle="Everything you need to know before getting started." />
+        <Accordion type="single" collapsible className="space-y-3">
+          {faqs.map((faq: any, i: number) => (
+            <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-xl px-6 data-[state=open]:bg-card">
+              <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline text-sm md:text-base">{faq.q}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground text-sm leading-relaxed">{faq.a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </section>
+  );
+};
 
 export default FAQSection;
