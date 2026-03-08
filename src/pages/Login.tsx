@@ -8,6 +8,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import logoImg from "@/assets/logo.png";
 
+// After login, admins go to /admin, others go to /
+
 const Login = () => {
   const { toast } = useToast();
   const { signIn } = useAuth();
