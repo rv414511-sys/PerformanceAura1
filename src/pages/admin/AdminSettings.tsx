@@ -598,6 +598,14 @@ const AdminSettings = () => {
             <SaveBtn onClick={() => saveMutation.mutate({ key: "section_animations", value: sectionAnimations })} />
           </Section>
         </TabsContent>
+
+        {/* ═══ CUSTOM SECTION BUILDER ═══ */}
+        <TabsContent value="custom-builder">
+          <Section title="🏗️ Custom Sections Builder" desc="Naye sections banayein — template choose karein, blocks add karein (heading, text, image, button). Ye sections homepage ke existing sections ke saath dikhenge.">
+            <CustomSectionBuilder sections={customSections} onChange={setCustomSections} />
+            <SaveBtn onClick={() => saveMutation.mutate({ key: "custom_sections", value: { items: customSections } })} />
+          </Section>
+        </TabsContent>
       </Tabs>
     </div>
   );
