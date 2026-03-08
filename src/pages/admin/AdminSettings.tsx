@@ -235,7 +235,7 @@ const AdminSettings = () => {
 
       <Tabs defaultValue="sections" className="w-full">
         <TabsList className="flex flex-wrap h-auto gap-1 mb-6 bg-muted p-1 rounded-xl">
-          {["sections", "general", "hero", "stats", "services", "problems", "solutions", "process", "founder", "case-studies", "faq", "cta", "brands", "colors", "animations"].map((t) => (
+          {["sections", "custom-builder", "general", "hero", "stats", "services", "problems", "solutions", "process", "founder", "case-studies", "faq", "cta", "brands", "colors", "animations"].map((t) => (
             <TabsTrigger key={t} value={t} className="text-xs capitalize">{t.replace("-", " ")}</TabsTrigger>
           ))}
         </TabsList>
