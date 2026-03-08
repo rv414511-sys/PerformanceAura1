@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: "150+", label: "Clients Served" },
-  { value: "₹5Cr+", label: "Ad Spend Managed" },
+  { value: "50+", label: "Clients Served" },
+  { value: "₹1Cr+", label: "Ad Spend Managed" },
   { value: "3.2x", label: "Avg. ROAS" },
-  { value: "95%", label: "Client Retention" },
+  { value: "120+", label: "Campaigns Managed" },
 ];
 
 const StatsSection = () => (
