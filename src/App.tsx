@@ -35,6 +35,7 @@ import AdminCourses from "./pages/admin/AdminCourses";
 import AdminResources from "./pages/admin/AdminResources";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminUsers from "./pages/admin/AdminUsers";
+import AdminSettings from "./pages/admin/AdminSettings";
 
 const queryClient = new QueryClient();
 
