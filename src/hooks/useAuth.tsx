@@ -84,6 +84,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
+  if (!ctx) {
+    // During HMR, context can temporarily be undefined — return safe defaults
+    return {
+      user: null,
+      session: null,
+      loading: true,
+      isAdmin: false,
+      signUp: async () => ({ data: null, error: { message: "Auth not ready" } }),
+      signIn: async () => ({ error: { message: "Auth not ready" } }),
+      resendVerification: async () => ({ error: { message: "Auth not ready" } }),
+      signOut: async () => {},
+    } as AuthContextType;
+  }
   return ctx;
 };
