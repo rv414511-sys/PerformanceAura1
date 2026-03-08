@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import logoImg from "@/assets/logo.png";
 
 const Signup = () => {
   const { toast } = useToast();
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
   const [loading, setLoading] = useState(false);
 
@@ -26,24 +30,26 @@ const Signup = () => {
       return;
     }
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1000));
-    toast({ title: "Signup functionality coming soon!" });
+    const { error } = await signUp(form.email, form.password, form.name);
     setLoading(false);
+    if (error) {
+      toast({ title: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "Account created!", description: "Please check your email to verify your account." });
+      navigate("/login");
+    }
   };
 
   return (
     <section className="min-h-screen flex items-center justify-center section-padding bg-surface">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-display font-bold text-xl">P</span>
-            </div>
+          <Link to="/" className="inline-block mb-6">
+            <img src={logoImg} alt="PerformanceAura" className="h-10 w-auto mx-auto" />
           </Link>
           <h1 className="font-display text-3xl font-bold text-foreground">Create Account</h1>
           <p className="text-muted-foreground mt-2">Start your growth journey with PerformanceAura</p>
         </div>
-
         <form onSubmit={handleSubmit} className="p-8 rounded-2xl border border-border bg-card space-y-5">
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
