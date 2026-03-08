@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-const fallbackPostDetails: Record<string, { title: string; category: string; read_time: string; created_at: string; keywords: string[]; content: string }> = {
+const fallbackPostDetails: Record<string, { title: string; category: string; read_time: string; created_at: string; keywords: string[]; content: string; excerpt?: string }> = {
   "ai-revolutionizing-digital-marketing-2026": {
     title: "How AI is Revolutionizing Digital Marketing in 2026",
     category: "AI & Marketing",
