@@ -115,6 +115,7 @@ const AdminSettings = () => {
   const [colors, setColors] = useState({ primary_h: "249", primary_s: "68", primary_l: "29", accent_h: "14", accent_s: "100", accent_l: "57", primary_hex: "#1a0f5e", accent_hex: "#ff6b2b" });
   const [sections, setSections] = useState(defaultSections);
   const [sectionAnimations, setSectionAnimations] = useState<Record<string, string>>({});
+  const [customSections, setCustomSections] = useState<CustomSection[]>([]);
 
   // ─── Initialize with DEFAULTS when DB is empty ───
   useEffect(() => {
