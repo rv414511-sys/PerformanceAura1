@@ -162,6 +162,9 @@ const AdminSettings = () => {
     if (settings.section_animations?.value) {
       setSectionAnimations(settings.section_animations.value);
     }
+    if (settings.custom_sections?.value?.items?.length) {
+      setCustomSections(settings.custom_sections.value.items);
+    }
   }, [settings]);
 
   const saveMutation = useMutation({
