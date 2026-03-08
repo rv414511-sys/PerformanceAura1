@@ -12,7 +12,7 @@ import logoImg from "@/assets/logo.png";
 
 const Login = () => {
   const { toast } = useToast();
-  const { signIn, resendVerification } = useAuth();
+  const { signIn } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,9 +24,11 @@ const Login = () => {
       toast({ title: "Please fill in all fields", variant: "destructive" });
       return;
     }
+
     setLoading(true);
     const { error } = await signIn(email, password);
     setLoading(false);
+
     if (error) {
       const isInvalidCreds = error.message?.toLowerCase?.().includes("invalid login credentials");
       toast({
@@ -36,10 +38,18 @@ const Login = () => {
           : undefined,
         variant: "destructive",
       });
-    } else {
-      toast({ title: "Welcome back!" });
-      navigate("/");
+      return;
     }
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data: isAdmin } = await supabase.rpc("has_role", { _user_id: user.id, _role: "admin" });
+      toast({ title: "Welcome back!" });
+      navigate(isAdmin ? "/admin" : "/");
+      return;
+    }
+
+    navigate("/");
   };
 
   return (
