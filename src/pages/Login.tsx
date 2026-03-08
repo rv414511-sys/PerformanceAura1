@@ -64,6 +64,25 @@ const Login = () => {
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Signing in..." : "Sign In"}
           </Button>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={async () => {
+              if (!email) {
+                toast({ title: "Pehle email enter kijiye", variant: "destructive" });
+                return;
+              }
+              const { error } = await resendVerification(email);
+              if (error) {
+                toast({ title: "Verification mail resend failed", description: error.message, variant: "destructive" });
+              } else {
+                toast({ title: "Verification email sent", description: "Inbox/spam check kijiye." });
+              }
+            }}
+          >
+            Resend Verification Email
+          </Button>
           <p className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
             <Link to="/signup" className="text-primary hover:underline font-medium">Sign Up</Link>

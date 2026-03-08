@@ -30,12 +30,19 @@ const Signup = () => {
       return;
     }
     setLoading(true);
-    const { error } = await signUp(form.email, form.password, form.name);
+    const { data, error } = await signUp(form.email, form.password, form.name);
     setLoading(false);
     if (error) {
       toast({ title: error.message, variant: "destructive" });
+    } else if (data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+      toast({
+        title: "Email already registered",
+        description: "Agar account verify nahi hua hai to Login page se verification mail dobara bhej do.",
+        variant: "destructive",
+      });
+      navigate("/login");
     } else {
-      toast({ title: "Account created!", description: "Please check your email to verify your account." });
+      toast({ title: "Account created!", description: "Verification email inbox/spam mein check karke verify kijiye." });
       navigate("/login");
     }
   };
