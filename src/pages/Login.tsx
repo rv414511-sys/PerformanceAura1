@@ -31,6 +31,7 @@ const Login = () => {
       toast({ title: error.message, variant: "destructive" });
     } else {
       toast({ title: "Welcome back!" });
+      // Small delay to let auth state update
       navigate("/");
     }
   };

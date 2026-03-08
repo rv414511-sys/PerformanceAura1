@@ -60,6 +60,7 @@ const App = () => (
               <Route path="resources" element={<AdminResources />} />
               <Route path="payments" element={<AdminPayments />} />
               <Route path="users" element={<AdminUsers />} />
+              <Route path="settings" element={<AdminSettings />} />
             </Route>
 
             {/* Public */}
