@@ -28,10 +28,16 @@ const Login = () => {
     const { error } = await signIn(email, password);
     setLoading(false);
     if (error) {
-      toast({ title: error.message, variant: "destructive" });
+      const isInvalidCreds = error.message?.toLowerCase?.().includes("invalid login credentials");
+      toast({
+        title: isInvalidCreds ? "Login failed" : error.message,
+        description: isInvalidCreds
+          ? "Ya to password galat hai ya email verify nahi hui. Signup ke baad verification mail confirm karo."
+          : undefined,
+        variant: "destructive",
+      });
     } else {
       toast({ title: "Welcome back!" });
-      // Small delay to let auth state update
       navigate("/");
     }
   };
