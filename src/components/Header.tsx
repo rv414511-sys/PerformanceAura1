@@ -31,7 +31,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 glass">
       <div className="container mx-auto flex items-center justify-between h-20 px-6">
         <Link to="/" className="flex items-center gap-3">
-          <img src={logoImg} alt="PerformanceAura" className="h-12 w-auto drop-shadow-md" />
+          <img src={logoImg} alt="PerformanceAura" className="h-14 w-auto drop-shadow-md" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-7">
