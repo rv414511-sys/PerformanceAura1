@@ -176,6 +176,22 @@ const BlogPost = () => {
     enabled: !!slug,
   });
 
+  const { data: relatedPosts } = useQuery({
+    queryKey: ["related-posts", post?.category, slug],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("blog_posts")
+        .select("title, slug, excerpt, category, created_at, featured_image")
+        .eq("published", true)
+        .neq("slug", slug || "")
+        .limit(3)
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!post,
+  });
+
   if (isLoading) {
     return (
       <div className="section-padding text-center pt-32">
