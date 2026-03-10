@@ -63,7 +63,7 @@ const AdminBlogs = () => {
   });
 
   const resetForm = () => {
-    setForm({ title: "", slug: "", excerpt: "", content: "", category: "", meta_description: "", keywords: "", published: true, cover_image: "" });
+    setForm({ title: "", slug: "", excerpt: "", content: "", category: "", meta_description: "", keywords: "", published: true, featured_image: "", read_time: "" });
     setEditId(null);
     setShowForm(false);
   };
