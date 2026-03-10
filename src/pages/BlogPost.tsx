@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, CalendarDays, Clock, Tag } from "lucide-react";
+import { ArrowLeft, CalendarDays, Clock, Tag, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -176,6 +176,22 @@ const BlogPost = () => {
     enabled: !!slug,
   });
 
+  const { data: relatedPosts } = useQuery({
+    queryKey: ["related-posts", post?.category, slug],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("blog_posts")
+        .select("title, slug, excerpt, category, created_at, featured_image")
+        .eq("published", true)
+        .neq("slug", slug || "")
+        .limit(3)
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!post,
+  });
+
   if (isLoading) {
     return (
       <div className="section-padding text-center pt-32">
@@ -288,6 +304,27 @@ const BlogPost = () => {
               <Link to="/contact">Book Free Consultation</Link>
             </Button>
           </div>
+
+          {/* Related Posts */}
+          {relatedPosts && relatedPosts.length > 0 && (
+            <div className="mt-16">
+              <h2 className="font-display text-2xl font-bold text-foreground mb-6">Related Articles</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {relatedPosts.map((rp: any, i: number) => (
+                  <Link key={i} to={`/blog/${rp.slug}`} className="group block rounded-xl border border-border bg-card hover:border-primary/30 hover:shadow-md transition-all overflow-hidden">
+                    {rp.featured_image && (
+                      <img src={rp.featured_image} alt={rp.title} className="w-full h-36 object-cover" />
+                    )}
+                    <div className="p-4">
+                      {rp.category && <span className="text-xs font-semibold text-primary">{rp.category}</span>}
+                      <h4 className="font-display text-sm font-bold text-card-foreground mt-1 group-hover:text-primary transition-colors leading-snug">{rp.title}</h4>
+                      <span className="inline-flex items-center text-xs font-medium text-primary mt-3">Read More <ArrowRight size={12} className="ml-1" /></span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </article>
     </>

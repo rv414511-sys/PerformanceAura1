@@ -13,7 +13,7 @@ const AdminBlogs = () => {
   const qc = useQueryClient();
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
-  const [form, setForm] = useState({ title: "", slug: "", excerpt: "", content: "", category: "", meta_description: "", keywords: "", published: true, cover_image: "" });
+  const [form, setForm] = useState({ title: "", slug: "", excerpt: "", content: "", category: "", meta_description: "", keywords: "", published: true, featured_image: "", read_time: "" });
 
   const { data: posts, isLoading } = useQuery({
     queryKey: ["admin-blogs"],
@@ -35,6 +35,8 @@ const AdminBlogs = () => {
         meta_description: form.meta_description || null,
         keywords: form.keywords ? form.keywords.split(",").map((k) => k.trim()) : null,
         published: form.published,
+        featured_image: form.featured_image || null,
+        read_time: form.read_time || null,
       };
       if (editId) {
         const { error } = await supabase.from("blog_posts").update(payload).eq("id", editId);
@@ -61,7 +63,7 @@ const AdminBlogs = () => {
   });
 
   const resetForm = () => {
-    setForm({ title: "", slug: "", excerpt: "", content: "", category: "", meta_description: "", keywords: "", published: true, cover_image: "" });
+    setForm({ title: "", slug: "", excerpt: "", content: "", category: "", meta_description: "", keywords: "", published: true, featured_image: "", read_time: "" });
     setEditId(null);
     setShowForm(false);
   };
@@ -70,7 +72,8 @@ const AdminBlogs = () => {
     setForm({
       title: p.title, slug: p.slug, excerpt: p.excerpt || "", content: p.content || "",
       category: p.category || "", meta_description: p.meta_description || "",
-      keywords: p.keywords?.join(", ") || "", published: p.published, cover_image: "",
+      keywords: p.keywords?.join(", ") || "", published: p.published,
+      featured_image: p.featured_image || "", read_time: p.read_time || "",
     });
     setEditId(p.id);
     setShowForm(true);
@@ -117,6 +120,17 @@ const AdminBlogs = () => {
           <div className="space-y-1">
             <label className="text-sm font-medium text-foreground">Meta Description (SEO ke liye)</label>
             <Input placeholder="Google mein dikhne wala description" value={form.meta_description} onChange={(e) => setForm({ ...form, meta_description: e.target.value })} />
+          </div>
+          <div className="space-y-1">
+            <label className="text-sm font-medium text-foreground">Featured Image URL</label>
+            <Input placeholder="https://... ya storage URL paste karein" value={form.featured_image} onChange={(e) => setForm({ ...form, featured_image: e.target.value })} />
+            {form.featured_image && <img src={form.featured_image} alt="Preview" className="h-32 rounded-lg object-cover mt-2" />}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-sm font-medium text-foreground">Read Time</label>
+              <Input placeholder="e.g. 5 min read" value={form.read_time} onChange={(e) => setForm({ ...form, read_time: e.target.value })} />
+            </div>
           </div>
           <div className="space-y-1">
             <label className="text-sm font-medium text-foreground">Content *</label>
