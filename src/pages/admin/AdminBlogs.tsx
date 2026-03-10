@@ -35,6 +35,8 @@ const AdminBlogs = () => {
         meta_description: form.meta_description || null,
         keywords: form.keywords ? form.keywords.split(",").map((k) => k.trim()) : null,
         published: form.published,
+        featured_image: form.featured_image || null,
+        read_time: form.read_time || null,
       };
       if (editId) {
         const { error } = await supabase.from("blog_posts").update(payload).eq("id", editId);
