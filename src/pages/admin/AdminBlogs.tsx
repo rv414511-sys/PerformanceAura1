@@ -122,6 +122,17 @@ const AdminBlogs = () => {
             <Input placeholder="Google mein dikhne wala description" value={form.meta_description} onChange={(e) => setForm({ ...form, meta_description: e.target.value })} />
           </div>
           <div className="space-y-1">
+            <label className="text-sm font-medium text-foreground">Featured Image URL</label>
+            <Input placeholder="https://... ya storage URL paste karein" value={form.featured_image} onChange={(e) => setForm({ ...form, featured_image: e.target.value })} />
+            {form.featured_image && <img src={form.featured_image} alt="Preview" className="h-32 rounded-lg object-cover mt-2" />}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-sm font-medium text-foreground">Read Time</label>
+              <Input placeholder="e.g. 5 min read" value={form.read_time} onChange={(e) => setForm({ ...form, read_time: e.target.value })} />
+            </div>
+          </div>
+          <div className="space-y-1">
             <label className="text-sm font-medium text-foreground">Content *</label>
             <Textarea placeholder="Blog content yahan likhein... &#10;&#10;## Heading 2&#10;### Heading 3&#10;&#10;Paragraph text..." value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={14} className="font-mono text-sm" />
           </div>
