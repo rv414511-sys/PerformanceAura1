@@ -72,7 +72,8 @@ const AdminBlogs = () => {
     setForm({
       title: p.title, slug: p.slug, excerpt: p.excerpt || "", content: p.content || "",
       category: p.category || "", meta_description: p.meta_description || "",
-      keywords: p.keywords?.join(", ") || "", published: p.published, cover_image: "",
+      keywords: p.keywords?.join(", ") || "", published: p.published,
+      featured_image: p.featured_image || "", read_time: p.read_time || "",
     });
     setEditId(p.id);
     setShowForm(true);
