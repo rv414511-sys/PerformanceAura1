@@ -20,6 +20,7 @@ export type Database = {
           content: string | null
           created_at: string
           excerpt: string | null
+          featured_image: string | null
           id: string
           keywords: string[] | null
           meta_description: string | null
@@ -34,6 +35,7 @@ export type Database = {
           content?: string | null
           created_at?: string
           excerpt?: string | null
+          featured_image?: string | null
           id?: string
           keywords?: string[] | null
           meta_description?: string | null
@@ -48,6 +50,7 @@ export type Database = {
           content?: string | null
           created_at?: string
           excerpt?: string | null
+          featured_image?: string | null
           id?: string
           keywords?: string[] | null
           meta_description?: string | null
