@@ -13,7 +13,7 @@ const AdminBlogs = () => {
   const qc = useQueryClient();
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
-  const [form, setForm] = useState({ title: "", slug: "", excerpt: "", content: "", category: "", meta_description: "", keywords: "", published: true, cover_image: "" });
+  const [form, setForm] = useState({ title: "", slug: "", excerpt: "", content: "", category: "", meta_description: "", keywords: "", published: true, featured_image: "", read_time: "" });
 
   const { data: posts, isLoading } = useQuery({
     queryKey: ["admin-blogs"],
