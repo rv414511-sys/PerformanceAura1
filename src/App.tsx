@@ -38,6 +38,7 @@ import AdminResources from "./pages/admin/AdminResources";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminElementorPro from "./pages/admin/AdminElementorPro";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,7 @@ const App = () => (
               <Route path="resources" element={<AdminResources />} />
               <Route path="payments" element={<AdminPayments />} />
               <Route path="users" element={<AdminUsers />} />
+              <Route path="elementor-pro" element={<AdminElementorPro />} />
               <Route path="settings" element={<AdminSettings />} />
             </Route>
 

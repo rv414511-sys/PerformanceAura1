@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { LayoutDashboard, FileText, Star, Users, BookOpen, Download, CreditCard, MessageSquare, LogOut, Home, Settings, Menu, X, FileEdit } from "lucide-react";
+import { LayoutDashboard, FileText, Star, Users, BookOpen, Download, CreditCard, MessageSquare, LogOut, Home, Settings, Menu, X, FileEdit, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
@@ -14,6 +14,7 @@ const navItems = [
   { label: "Resources", to: "/admin/resources", icon: Download },
   { label: "Payments", to: "/admin/payments", icon: CreditCard },
   { label: "Users", to: "/admin/users", icon: Users },
+  { label: "Elementor Pro", to: "/admin/elementor-pro", icon: Sparkles },
   { label: "Settings", to: "/admin/settings", icon: Settings },
 ];
 
