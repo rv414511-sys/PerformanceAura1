@@ -38,6 +38,7 @@ import AdminResources from "./pages/admin/AdminResources";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminElementorPro from "./pages/admin/AdminElementorPro";
 
 const queryClient = new QueryClient();
 
