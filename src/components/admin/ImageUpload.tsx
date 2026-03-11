@@ -62,7 +62,7 @@ const ImageUpload = ({ value, onChange, folder = "general", label = "Image Uploa
       <label className="block text-sm font-medium text-foreground mb-2">{label}</label>
       {value ? (
         <div className="relative group rounded-xl overflow-hidden border border-border bg-card">
-          <img src={value} alt="Uploaded" className="w-full h-48 object-cover" />
+          <img src={value} alt="Uploaded" className="w-full h-48 object-contain bg-[length:20px_20px]" style={{ backgroundImage: "linear-gradient(45deg, #f0f0f0 25%, transparent 25%), linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f0f0f0 75%), linear-gradient(-45deg, transparent 75%, #f0f0f0 75%)", backgroundSize: "20px 20px", backgroundPosition: "0 0, 0 10px, 10px -10px, -10px 0px" }} />
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
             <Button size="sm" variant="secondary" onClick={() => inputRef.current?.click()}>
               <Upload size={14} className="mr-1" /> Change
