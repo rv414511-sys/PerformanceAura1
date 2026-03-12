@@ -93,6 +93,7 @@ const Index = () => {
             </motion.div>
           );
         })}
+      <VideoTestimonialsSection />
     </>
   );
 };

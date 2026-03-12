@@ -515,6 +515,11 @@ const AdminElementorPro = () => {
             <SaveBtn onClick={() => saveMutation.mutate({ key: "elementor_global_styles", value: globalStyles })} />
           </Section>
         </TabsContent>
+
+        {/* ═══ CONTAINER EDITOR ═══ */}
+        <TabsContent value="containers">
+          <ContainerEditor />
+        </TabsContent>
       </Tabs>
     </div>
   );
