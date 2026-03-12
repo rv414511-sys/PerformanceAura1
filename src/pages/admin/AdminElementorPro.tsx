@@ -8,8 +8,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Save, Loader2, Plus, Trash2, ChevronUp, ChevronDown, Bell, Gift, Video, Star, Image as ImageIcon, Type, Layout, Layers, Palette, Sparkles, MonitorPlay, SlidersHorizontal } from "lucide-react";
+import { Save, Loader2, Plus, Trash2, ChevronUp, ChevronDown, Bell, Gift, Video, Star, Image as ImageIcon, Type, Layout, Layers, Palette, Sparkles, MonitorPlay, SlidersHorizontal, Box } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
+import ContainerEditor from "@/components/admin/ContainerEditor";
 
 // ─── Types ───
 interface PopupConfig {
