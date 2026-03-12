@@ -205,6 +205,7 @@ const AdminElementorPro = () => {
           <TabsTrigger value="slides" className="text-xs"><MonitorPlay size={12} className="mr-1" /> Image Slider</TabsTrigger>
           <TabsTrigger value="notifications" className="text-xs"><Bell size={12} className="mr-1" /> Notifications</TabsTrigger>
           <TabsTrigger value="global-styles" className="text-xs"><Palette size={12} className="mr-1" /> Global Styles</TabsTrigger>
+          <TabsTrigger value="containers" className="text-xs"><Box size={12} className="mr-1" /> Container Editor</TabsTrigger>
         </TabsList>
 
         {/* ═══ POPUPS ═══ */}
