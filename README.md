@@ -29,12 +29,22 @@ git clone <YOUR_GIT_URL>
 # Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
+# Step 3: Install dependencies.
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Create local env file (required).
+cp .env.example .env
+
+# Step 5: Put your backend values in .env.
+# VITE_SUPABASE_URL=...
+# VITE_SUPABASE_PUBLISHABLE_KEY=...
+# VITE_SUPABASE_PROJECT_ID=...
+
+# Step 6: Start dev server.
 npm run dev
 ```
+
+If you see old login/data locally, clear browser site storage for localhost and restart the dev server.
 
 **Edit a file directly in GitHub**
 
