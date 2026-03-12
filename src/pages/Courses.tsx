@@ -75,7 +75,7 @@ const Courses = () => {
                 )}
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                   <span className="font-display text-2xl font-bold text-primary">₹{course.price?.toLocaleString()}</span>
-                  <Button size="sm" asChild><Link to="/contact">Enroll Now</Link></Button>
+                  <Button size="sm" asChild><Link to={`/contact?course=${encodeURIComponent(course.title)}`}>Enroll Now →</Link></Button>
                 </div>
               </motion.div>
             ))}

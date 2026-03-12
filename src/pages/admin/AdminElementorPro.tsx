@@ -8,8 +8,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Save, Loader2, Plus, Trash2, ChevronUp, ChevronDown, Bell, Gift, Video, Star, Image as ImageIcon, Type, Layout, Layers, Palette, Sparkles, MonitorPlay, SlidersHorizontal } from "lucide-react";
+import { Save, Loader2, Plus, Trash2, ChevronUp, ChevronDown, Bell, Gift, Video, Star, Image as ImageIcon, Type, Layout, Layers, Palette, Sparkles, MonitorPlay, SlidersHorizontal, Box } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
+import ContainerEditor from "@/components/admin/ContainerEditor";
 
 // ─── Types ───
 interface PopupConfig {
@@ -204,6 +205,7 @@ const AdminElementorPro = () => {
           <TabsTrigger value="slides" className="text-xs"><MonitorPlay size={12} className="mr-1" /> Image Slider</TabsTrigger>
           <TabsTrigger value="notifications" className="text-xs"><Bell size={12} className="mr-1" /> Notifications</TabsTrigger>
           <TabsTrigger value="global-styles" className="text-xs"><Palette size={12} className="mr-1" /> Global Styles</TabsTrigger>
+          <TabsTrigger value="containers" className="text-xs"><Box size={12} className="mr-1" /> Container Editor</TabsTrigger>
         </TabsList>
 
         {/* ═══ POPUPS ═══ */}
@@ -512,6 +514,11 @@ const AdminElementorPro = () => {
             </div>
             <SaveBtn onClick={() => saveMutation.mutate({ key: "elementor_global_styles", value: globalStyles })} />
           </Section>
+        </TabsContent>
+
+        {/* ═══ CONTAINER EDITOR ═══ */}
+        <TabsContent value="containers">
+          <ContainerEditor />
         </TabsContent>
       </Tabs>
     </div>

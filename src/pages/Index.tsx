@@ -12,6 +12,7 @@ import FAQSection from "@/components/home/FAQSection";
 import CTASection from "@/components/home/CTASection";
 import FounderSection from "@/components/home/FounderSection";
 import CustomSectionRenderer from "@/components/home/CustomSectionRenderer";
+import VideoTestimonialsSection from "@/components/home/VideoTestimonialsSection";
 import { motion } from "framer-motion";
 
 const sectionComponentMap: Record<string, React.ComponentType> = {
@@ -92,6 +93,7 @@ const Index = () => {
             </motion.div>
           );
         })}
+      <VideoTestimonialsSection />
     </>
   );
 };
