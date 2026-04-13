@@ -2,15 +2,15 @@ import { motion } from "framer-motion";
 import SectionHeading from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { BookOpen, Clock, Users } from "lucide-react";
+import { BookOpen, Clock, Star } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSetting } from "@/hooks/useSiteSettings";
 
 const fallbackCourses = [
-  { title: "Meta Ads Mastery", duration: "8 Weeks", price: 14999, description: "Learn to create high-converting Facebook & Instagram ad campaigns.", topics: ["Campaign structure", "Audience targeting", "Creative best practices", "Scaling strategies"] },
-  { title: "Google Ads Pro", duration: "6 Weeks", price: 12999, description: "Master search, display, and shopping campaigns on Google.", topics: ["Keyword research", "Bid strategies", "Quality Score optimization", "Conversion tracking"] },
-  { title: "Performance Marketing Blueprint", duration: "10 Weeks", price: 19999, description: "Full-funnel performance marketing strategies.", topics: ["Marketing funnels", "Multi-channel attribution", "CRO techniques", "Analytics"] },
+  { title: "Meta Ads Mastery", duration: "8 Weeks", price: 14999, rating: 5, description: "Learn to create high-converting Facebook & Instagram ad campaigns.", topics: ["Campaign structure", "Audience targeting", "Creative best practices", "Scaling strategies"], learn_points: ["Campaign structure & tracking", "Creative testing system", "Scaling with clear KPIs"] },
+  { title: "Google Ads Pro", duration: "6 Weeks", price: 12999, rating: 5, description: "Master search, display, and shopping campaigns on Google.", topics: ["Keyword research", "Bid strategies", "Quality Score optimization", "Conversion tracking"], learn_points: ["Search & PMax setup", "Keyword mapping", "Conversion tracking"] },
+  { title: "Performance Marketing Blueprint", duration: "10 Weeks", price: 19999, rating: 5, description: "Full-funnel performance marketing strategies.", topics: ["Marketing funnels", "Multi-channel attribution", "CRO techniques", "Analytics"], learn_points: ["Full-funnel strategy", "Reporting dashboards", "CRO basics"] },
 ];
 
 const Courses = () => {
@@ -59,11 +59,31 @@ const Courses = () => {
             {courses.map((course: any, i: number) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                 className="p-8 rounded-2xl border border-border bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300">
-                <div className="flex items-center gap-4 mb-4">
-                  {course.duration && <div className="flex items-center gap-1.5 text-xs text-muted-foreground"><Clock size={14} /> {course.duration}</div>}
+                {course.image_url && (
+                  <img src={course.image_url} alt={course.title} className="w-full h-44 object-cover rounded-xl border border-border mb-5" />
+                )}
+                <div className="flex items-center justify-between gap-4 mb-4">
+                  <div className="flex items-center gap-4">
+                    {course.duration && <div className="flex items-center gap-1.5 text-xs text-muted-foreground"><Clock size={14} /> {course.duration}</div>}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: Math.max(1, Math.min(5, course.rating || 5)) }).map((_, j) => (
+                      <Star key={j} size={14} className="fill-gold text-gold" />
+                    ))}
+                  </div>
                 </div>
                 <h3 className="font-display text-2xl font-bold text-card-foreground mb-2">{course.title}</h3>
                 <p className="text-muted-foreground text-sm mb-4">{course.description}</p>
+                {course.learn_points && course.learn_points.length > 0 && (
+                  <ul className="space-y-2 mb-6">
+                    {course.learn_points.slice(0, 4).map((p: string, j: number) => (
+                      <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 {course.topics && course.topics.length > 0 && (
                   <ul className="grid grid-cols-2 gap-2 mb-6">
                     {course.topics.map((t: string, j: number) => (

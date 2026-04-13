@@ -1,9 +1,12 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@/hooks/useAuth";
+import { useEffect, useRef } from "react";
+import { QueryClient, QueryClientProvider, useQueryClient } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AuthProvider, useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { useSetting } from "@/hooks/useSiteSettings";
 import Layout from "@/components/Layout";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -42,6 +45,128 @@ import AdminElementorPro from "./pages/admin/AdminElementorPro";
 
 const queryClient = new QueryClient();
 
+const SiteSettingsSync = () => {
+  const qc = useQueryClient();
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("site-settings-sync")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "site_settings" },
+        () => {
+          qc.invalidateQueries({ queryKey: ["site-settings"] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [qc]);
+
+  return null;
+};
+
+const AnalyticsTracker = () => {
+  const location = useLocation();
+  const { user } = useAuth();
+  const lastPathRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    const path = `${location.pathname}${location.search || ""}`;
+    if (lastPathRef.current === path) return;
+    lastPathRef.current = path;
+    if (path.startsWith("/admin")) return;
+
+    void supabase.from("analytics_events").insert({
+      user_id: user?.id ?? null,
+      event_type: "page_view",
+      path,
+      meta: {
+        referrer: document.referrer || null,
+        user_agent: navigator.userAgent || null,
+      },
+    });
+  }, [location.pathname, location.search, user?.id]);
+
+  return null;
+};
+
+const SeoMetaManager = () => {
+  const location = useLocation();
+  const { value: seo } = useSetting("seo");
+
+  useEffect(() => {
+    const siteTitle = seo?.site_title || "PerformanceAura";
+    const defaultDescription = seo?.default_description || "";
+    const ogImage = seo?.og_image || "";
+
+    const path = location.pathname || "/";
+    const pageMap: Record<string, string> = {
+      "/": "Home",
+      "/about": "About",
+      "/services": "Services",
+      "/courses": "Courses",
+      "/blog": "Blog",
+      "/resources": "Resources",
+      "/contact": "Contact",
+      "/privacy": "Privacy Policy",
+      "/terms": "Terms",
+      "/refund-policy": "Refund Policy",
+    };
+
+    const prettyFromSlug = (s: string) =>
+      s
+        .split("-")
+        .filter(Boolean)
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+
+    let pageTitle = pageMap[path] || "";
+    if (path.startsWith("/services/")) {
+      const slug = path.split("/services/")[1] || "";
+      pageTitle = prettyFromSlug(slug);
+    }
+
+    document.title = pageTitle ? `${pageTitle} — ${siteTitle}` : siteTitle;
+
+    const ensureMeta = (selector: string, attrs: Record<string, string>) => {
+      let el = document.head.querySelector(selector) as HTMLMetaElement | null;
+      if (!el) {
+        el = document.createElement("meta");
+        Object.entries(attrs).forEach(([k, v]) => el?.setAttribute(k, v));
+        document.head.appendChild(el);
+      }
+      return el;
+    };
+
+    const ensureName = (name: string) => ensureMeta(`meta[name="${name}"]`, { name });
+    const ensureProp = (property: string) => ensureMeta(`meta[property="${property}"]`, { property });
+
+    const descEl = ensureName("description");
+    descEl.setAttribute("content", defaultDescription);
+
+    const ogTitleEl = ensureProp("og:title");
+    ogTitleEl.setAttribute("content", document.title);
+    const ogDescEl = ensureProp("og:description");
+    ogDescEl.setAttribute("content", defaultDescription);
+    const ogTypeEl = ensureProp("og:type");
+    ogTypeEl.setAttribute("content", "website");
+    if (ogImage) {
+      const ogImgEl = ensureProp("og:image");
+      ogImgEl.setAttribute("content", ogImage);
+      const twImgEl = ensureName("twitter:image");
+      twImgEl.setAttribute("content", ogImage);
+    }
+
+    const twCardEl = ensureName("twitter:card");
+    twCardEl.setAttribute("content", "summary_large_image");
+  }, [location.pathname, seo?.site_title, seo?.default_description, seo?.og_image]);
+
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
@@ -49,6 +174,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <SiteSettingsSync />
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -90,6 +216,8 @@ const App = () => (
             <Route path="/refund-policy" element={<Layout><RefundPolicy /></Layout>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <SeoMetaManager />
+          <AnalyticsTracker />
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>

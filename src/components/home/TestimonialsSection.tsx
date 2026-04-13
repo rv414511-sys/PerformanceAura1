@@ -17,7 +17,12 @@ const TestimonialsSection = () => {
   const { data: reviews } = useQuery({
     queryKey: ["published-reviews"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("reviews").select("*").eq("published", true).order("created_at", { ascending: false });
+      const { data, error } = await supabase
+        .from("reviews")
+        .select("*")
+        .eq("published", true)
+        .or("review_type.is.null,review_type.eq.general")
+        .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
     },

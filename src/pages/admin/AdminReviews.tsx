@@ -12,7 +12,18 @@ const AdminReviews = () => {
   const qc = useQueryClient();
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
-  const [form, setForm] = useState({ name: "", company: "", text: "", rating: 5, published: true });
+  const [form, setForm] = useState({ name: "", company: "", text: "", rating: 5, published: true, review_type: "general", service_slug: "" });
+
+  const serviceOptions = [
+    { label: "Meta Ads", slug: "meta-ads" },
+    { label: "Google Ads", slug: "google-ads" },
+    { label: "Performance Marketing", slug: "performance-marketing" },
+    { label: "Video Editing", slug: "video-editing" },
+    { label: "AI Automation", slug: "ai-automation" },
+    { label: "Content Writing", slug: "content-writing" },
+    { label: "Social Media Marketing", slug: "social-media-marketing" },
+    { label: "Web Design", slug: "web-design" },
+  ];
 
   const { data: reviews, isLoading } = useQuery({
     queryKey: ["admin-reviews"],
@@ -25,7 +36,15 @@ const AdminReviews = () => {
 
   const saveMutation = useMutation({
     mutationFn: async () => {
-      const payload = { name: form.name, company: form.company || null, text: form.text, rating: form.rating, published: form.published };
+      const payload = {
+        name: form.name,
+        company: form.company || null,
+        text: form.text,
+        rating: form.rating,
+        published: form.published,
+        review_type: form.review_type || "general",
+        service_slug: form.review_type === "service" ? (form.service_slug || null) : null,
+      };
       if (editId) {
         const { error } = await supabase.from("reviews").update(payload).eq("id", editId);
         if (error) throw error;
@@ -43,10 +62,18 @@ const AdminReviews = () => {
     onSuccess: () => { toast({ title: "Review deleted" }); qc.invalidateQueries({ queryKey: ["admin-reviews"] }); },
   });
 
-  const resetForm = () => { setForm({ name: "", company: "", text: "", rating: 5, published: true }); setEditId(null); setShowForm(false); };
+  const resetForm = () => { setForm({ name: "", company: "", text: "", rating: 5, published: true, review_type: "general", service_slug: "" }); setEditId(null); setShowForm(false); };
 
   const startEdit = (r: any) => {
-    setForm({ name: r.name, company: r.company || "", text: r.text, rating: r.rating, published: r.published });
+    setForm({
+      name: r.name,
+      company: r.company || "",
+      text: r.text,
+      rating: r.rating,
+      published: r.published,
+      review_type: r.review_type || "general",
+      service_slug: r.service_slug || "",
+    });
     setEditId(r.id); setShowForm(true);
   };
 
@@ -71,6 +98,34 @@ const AdminReviews = () => {
               <Input placeholder="Company ka naam" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} />
             </div>
           </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-sm font-medium">Review Type</label>
+              <select
+                value={form.review_type}
+                onChange={(e) => setForm({ ...form, review_type: e.target.value, service_slug: e.target.value === "service" ? form.service_slug : "" })}
+                className="w-full px-3 py-2 rounded-md border border-border bg-background text-sm"
+              >
+                <option value="general">Homepage / General</option>
+                <option value="service">Service-specific</option>
+              </select>
+            </div>
+            {form.review_type === "service" && (
+              <div className="space-y-1">
+                <label className="text-sm font-medium">Service</label>
+                <select
+                  value={form.service_slug}
+                  onChange={(e) => setForm({ ...form, service_slug: e.target.value })}
+                  className="w-full px-3 py-2 rounded-md border border-border bg-background text-sm"
+                >
+                  <option value="">Select service</option>
+                  {serviceOptions.map((s) => (
+                    <option key={s.slug} value={s.slug}>{s.label}</option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
           <div className="space-y-1">
             <label className="text-sm font-medium">Testimonial *</label>
             <Textarea placeholder="Client ne kya kaha..." value={form.text} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={3} />
@@ -87,7 +142,7 @@ const AdminReviews = () => {
             <label className="flex items-center gap-2 text-sm cursor-pointer">
               <input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} /> Published
             </label>
-            <Button onClick={() => saveMutation.mutate()} disabled={!form.name || !form.text || saveMutation.isPending}>
+            <Button onClick={() => saveMutation.mutate()} disabled={!form.name || !form.text || saveMutation.isPending || (form.review_type === "service" && !form.service_slug)}>
               <Check size={14} className="mr-1" /> {editId ? "Update" : "Add Review"}
             </Button>
           </div>
@@ -102,6 +157,7 @@ const AdminReviews = () => {
                   <h3 className="font-semibold text-foreground">{r.name}</h3>
                   <span className="text-xs text-muted-foreground">{r.company}</span>
                   <div className="flex gap-0.5">{Array.from({ length: r.rating }).map((_, j) => <Star key={j} size={12} className="fill-yellow-400 text-yellow-400" />)}</div>
+                  {r.review_type === "service" && <span className="text-[10px] px-2 py-0.5 rounded bg-muted text-muted-foreground">{r.service_slug}</span>}
                 </div>
                 <p className="text-sm text-muted-foreground mt-1 line-clamp-1">{r.text}</p>
               </div>

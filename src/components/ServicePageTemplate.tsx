@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link, useParams } from "react-router-dom";
-import { ArrowRight, CheckCircle, LucideIcon } from "lucide-react";
+import { ArrowRight, CheckCircle, LucideIcon, Quote, Star } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
 import { useSetting } from "@/hooks/useSiteSettings";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ServicePageData {
   title: string;
@@ -23,6 +25,23 @@ const ServicePageTemplate = ({ data }: { data: ServicePageData }) => {
   const slug = window.location.pathname.split("/services/")[1] || "";
   const settingsKey = `page_service_${slug.replace(/-/g, "_")}`;
   const { value: pageData } = useSetting(settingsKey);
+
+  const { data: serviceReviews } = useQuery({
+    queryKey: ["service-reviews", slug],
+    queryFn: async () => {
+      if (!slug) return [];
+      const { data, error } = await supabase
+        .from("reviews")
+        .select("*")
+        .eq("published", true)
+        .eq("review_type", "service")
+        .eq("service_slug", slug)
+        .order("created_at", { ascending: false })
+        .limit(6);
+      if (error) throw error;
+      return data || [];
+    },
+  });
 
   // Merge: DB overrides defaults
   const d = {
@@ -115,6 +134,43 @@ const ServicePageTemplate = ({ data }: { data: ServicePageData }) => {
           </div>
         </div>
       </section>
+
+      {serviceReviews && serviceReviews.length > 0 && (
+        <section className="section-padding bg-background">
+          <div className="container mx-auto">
+            <SectionHeading badge="Reviews" title="Client Feedback" subtitle="Service-specific reviews from real clients." />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {serviceReviews.map((t: any, i: number) => (
+                <motion.div
+                  key={t.id || i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  className="p-8 rounded-2xl bg-card border border-border hover:shadow-lg transition-shadow"
+                >
+                  <Quote size={24} className="text-primary/20 mb-3" />
+                  <div className="flex gap-1 mb-4">
+                    {Array.from({ length: Math.max(1, Math.min(5, t.rating || 5)) }).map((_, j) => (
+                      <Star key={j} size={14} className="fill-gold text-gold" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">"{t.text}"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+                      {t.name?.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-card-foreground text-sm">{t.name}</div>
+                      <div className="text-xs text-muted-foreground">{t.company}</div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="hero-gradient section-padding">
         <div className="container mx-auto text-center">

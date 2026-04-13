@@ -68,8 +68,11 @@ export type Database = {
           description: string | null
           duration: string | null
           id: string
+          image_url: string | null
+          learn_points: string[] | null
           price: number
           published: boolean
+          rating: number
           title: string
           topics: string[] | null
         }
@@ -78,8 +81,11 @@ export type Database = {
           description?: string | null
           duration?: string | null
           id?: string
+          image_url?: string | null
+          learn_points?: string[] | null
           price?: number
           published?: boolean
+          rating?: number
           title: string
           topics?: string[] | null
         }
@@ -88,8 +94,11 @@ export type Database = {
           description?: string | null
           duration?: string | null
           id?: string
+          image_url?: string | null
+          learn_points?: string[] | null
           price?: number
           published?: boolean
+          rating?: number
           title?: string
           topics?: string[] | null
         }
@@ -174,6 +183,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string
+          email: string | null
           full_name: string | null
           id: string
           updated_at: string
@@ -181,6 +191,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          email?: string | null
           full_name?: string | null
           id: string
           updated_at?: string
@@ -188,9 +199,37 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           created_at?: string
+          email?: string | null
           full_name?: string | null
           id?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      analytics_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          meta: Json
+          path: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          meta?: Json
+          path?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          meta?: Json
+          path?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -264,6 +303,8 @@ export type Database = {
           name: string
           published: boolean
           rating: number
+          review_type: string
+          service_slug: string | null
           text: string
         }
         Insert: {
@@ -273,6 +314,8 @@ export type Database = {
           name: string
           published?: boolean
           rating?: number
+          review_type?: string
+          service_slug?: string | null
           text: string
         }
         Update: {
@@ -282,6 +325,8 @@ export type Database = {
           name?: string
           published?: boolean
           rating?: number
+          review_type?: string
+          service_slug?: string | null
           text?: string
         }
         Relationships: []

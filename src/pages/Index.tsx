@@ -26,6 +26,7 @@ const sectionComponentMap: Record<string, React.ComponentType> = {
   founder: FounderSection,
   "case-studies": CaseStudySection,
   testimonials: TestimonialsSection,
+  "video-testimonials": VideoTestimonialsSection,
   faq: FAQSection,
   cta: CTASection,
 };
@@ -50,6 +51,7 @@ const defaultSections = [
   { id: "founder", visible: true },
   { id: "case-studies", visible: true },
   { id: "testimonials", visible: true },
+  { id: "video-testimonials", visible: true },
   { id: "faq", visible: true },
   { id: "cta", visible: true },
 ];
@@ -59,7 +61,15 @@ const Index = () => {
   const { value: animationsData } = useSetting("section_animations");
   const { value: customSectionsData } = useSetting("custom_sections");
   
-  const sections = sectionsData?.items?.length ? sectionsData.items : defaultSections;
+  const mergeSections = (saved: any[]) => {
+    const merged = [...saved];
+    defaultSections.forEach((d) => {
+      if (!merged.some((s) => s.id === d.id)) merged.push(d);
+    });
+    return merged;
+  };
+
+  const sections = sectionsData?.items?.length ? mergeSections(sectionsData.items) : defaultSections;
   const animations = animationsData || {};
   const customSections = customSectionsData?.items || [];
 
@@ -93,7 +103,6 @@ const Index = () => {
             </motion.div>
           );
         })}
-      <VideoTestimonialsSection />
     </>
   );
 };

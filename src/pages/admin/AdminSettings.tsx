@@ -71,6 +71,7 @@ const defaultSections = [
   { id: "founder", label: "Founder", visible: true },
   { id: "case-studies", label: "Case Studies", visible: true },
   { id: "testimonials", label: "Testimonials", visible: true },
+  { id: "video-testimonials", label: "Video Testimonials", visible: true },
   { id: "faq", label: "FAQ", visible: true },
   { id: "cta", label: "CTA Section", visible: true },
 ];
@@ -113,6 +114,7 @@ const AdminSettings = () => {
   const [caseStudies, setCaseStudies] = useState<{ industry: string; brand: string; challenge: string; solution: string; timeline: string; results: { metric: string; before: string; after: string }[] }[]>([]);
   const [general, setGeneral] = useState({ logo_url: "", phone: "", email: "", address: "", facebook: "", twitter: "", instagram: "", linkedin: "", youtube: "", footer_text: "" });
   const [colors, setColors] = useState({ primary_h: "249", primary_s: "68", primary_l: "29", accent_h: "14", accent_s: "100", accent_l: "57", primary_hex: "#1a0f5e", accent_hex: "#ff6b2b" });
+  const [seo, setSeo] = useState({ site_title: "PerformanceAura", default_description: "", og_image: "" });
   const [sections, setSections] = useState(defaultSections);
   const [sectionAnimations, setSectionAnimations] = useState<Record<string, string>>({});
   const [customSections, setCustomSections] = useState<CustomSection[]>([]);
@@ -156,8 +158,16 @@ const AdminSettings = () => {
     if (settings.colors?.value) {
       setColors({ primary_h: "249", primary_s: "68", primary_l: "29", accent_h: "14", accent_s: "100", accent_l: "57", primary_hex: "#1a0f5e", accent_hex: "#ff6b2b", ...settings.colors.value });
     }
+    if (settings.seo?.value) {
+      setSeo({ site_title: "PerformanceAura", default_description: "", og_image: "", ...settings.seo.value });
+    }
     if (settings.homepage_sections?.value?.items?.length) {
-      setSections(settings.homepage_sections.value.items);
+      const saved = settings.homepage_sections.value.items;
+      const merged = [...saved];
+      defaultSections.forEach((d) => {
+        if (!merged.some((s: any) => s.id === d.id)) merged.push(d);
+      });
+      setSections(merged);
     }
     if (settings.section_animations?.value) {
       setSectionAnimations(settings.section_animations.value);
@@ -203,9 +213,10 @@ const AdminSettings = () => {
   const hexToHsl = (hex: string) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     if (!result) return null;
-    let r = parseInt(result[1], 16) / 255, g = parseInt(result[2], 16) / 255, b = parseInt(result[3], 16) / 255;
+    const r = parseInt(result[1], 16) / 255, g = parseInt(result[2], 16) / 255, b = parseInt(result[3], 16) / 255;
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h = 0, s = 0, l = (max + min) / 2;
+    let h = 0, s = 0;
+    const l = (max + min) / 2;
     if (max !== min) {
       const d = max - min;
       s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -235,7 +246,7 @@ const AdminSettings = () => {
 
       <Tabs defaultValue="sections" className="w-full">
         <TabsList className="flex flex-wrap h-auto gap-1 mb-6 bg-muted p-1 rounded-xl">
-          {["sections", "custom-builder", "general", "hero", "stats", "services", "problems", "solutions", "process", "founder", "case-studies", "faq", "cta", "brands", "colors", "animations"].map((t) => (
+          {["sections", "custom-builder", "general", "seo", "hero", "stats", "services", "problems", "solutions", "process", "founder", "case-studies", "faq", "cta", "brands", "colors", "animations"].map((t) => (
             <TabsTrigger key={t} value={t} className="text-xs capitalize">{t.replace("-", " ")}</TabsTrigger>
           ))}
         </TabsList>
@@ -312,6 +323,17 @@ const AdminSettings = () => {
               ))}
             </div>
             <SaveBtn onClick={() => saveMutation.mutate({ key: "general", value: general })} />
+          </Section>
+        </TabsContent>
+
+        <TabsContent value="seo">
+          <Section title="🔎 SEO / Meta" desc="Default title, meta description aur OG image set karein.">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Field label="Site Title" value={seo.site_title} onChange={(v) => setSeo({ ...seo, site_title: v })} />
+            </div>
+            <Textarea placeholder="Default meta description" value={seo.default_description} onChange={(e) => setSeo({ ...seo, default_description: e.target.value })} rows={3} />
+            <ImageUpload value={seo.og_image} onChange={(url) => setSeo({ ...seo, og_image: url })} folder="branding" label="OG Image (share preview)" />
+            <SaveBtn onClick={() => saveMutation.mutate({ key: "seo", value: seo })} />
           </Section>
         </TabsContent>
 

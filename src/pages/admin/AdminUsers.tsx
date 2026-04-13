@@ -62,6 +62,7 @@ const AdminUsers = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">{u.full_name || "Unnamed"}</h3>
+                  {u.email && <p className="text-xs text-muted-foreground">{u.email}</p>}
                   <p className="text-xs text-muted-foreground">Joined {new Date(u.created_at).toLocaleDateString()}</p>
                 </div>
               </div>

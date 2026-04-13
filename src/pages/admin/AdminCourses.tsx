@@ -13,7 +13,17 @@ const AdminCourses = () => {
   const qc = useQueryClient();
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
-  const [form, setForm] = useState({ title: "", description: "", duration: "", price: 0, topics: "", published: true, image_url: "" });
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    duration: "",
+    price: 0,
+    topics: "",
+    learn_points: "",
+    rating: 5,
+    published: true,
+    image_url: "",
+  });
 
   const { data: courses, isLoading } = useQuery({
     queryKey: ["admin-courses"],
@@ -32,7 +42,12 @@ const AdminCourses = () => {
         duration: form.duration || null,
         price: form.price,
         topics: form.topics ? form.topics.split(",").map((t) => t.trim()) : null,
+        learn_points: form.learn_points
+          ? form.learn_points.split("\n").map((t) => t.trim()).filter(Boolean)
+          : null,
+        rating: Math.max(1, Math.min(5, Number(form.rating) || 5)),
         published: form.published,
+        image_url: form.image_url || null,
       };
       if (editId) {
         const { error } = await supabase.from("courses").update(payload).eq("id", editId);
@@ -51,10 +66,24 @@ const AdminCourses = () => {
     onSuccess: () => { toast({ title: "Course deleted" }); qc.invalidateQueries({ queryKey: ["admin-courses"] }); },
   });
 
-  const resetForm = () => { setForm({ title: "", description: "", duration: "", price: 0, topics: "", published: true, image_url: "" }); setEditId(null); setShowForm(false); };
+  const resetForm = () => {
+    setForm({ title: "", description: "", duration: "", price: 0, topics: "", learn_points: "", rating: 5, published: true, image_url: "" });
+    setEditId(null);
+    setShowForm(false);
+  };
 
   const startEdit = (c: any) => {
-    setForm({ title: c.title, description: c.description || "", duration: c.duration || "", price: c.price, topics: c.topics?.join(", ") || "", published: c.published, image_url: "" });
+    setForm({
+      title: c.title,
+      description: c.description || "",
+      duration: c.duration || "",
+      price: c.price,
+      topics: c.topics?.join(", ") || "",
+      learn_points: c.learn_points?.join("\n") || "",
+      rating: c.rating || 5,
+      published: c.published,
+      image_url: c.image_url || "",
+    });
     setEditId(c.id); setShowForm(true);
   };
 
@@ -69,6 +98,7 @@ const AdminCourses = () => {
       </div>
       {showForm && (
         <div className="p-6 rounded-xl border border-border bg-card mb-6 space-y-4">
+          <ImageUpload value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} folder="courses" label="Course Image" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-sm font-medium">Course Title *</label>
@@ -86,8 +116,13 @@ const AdminCourses = () => {
               <label className="text-sm font-medium">Topics (comma se alag)</label>
               <Input placeholder="AI, Marketing, Ads" value={form.topics} onChange={(e) => setForm({ ...form, topics: e.target.value })} />
             </div>
+            <div className="space-y-1">
+              <label className="text-sm font-medium">Rating (1-5)</label>
+              <Input type="number" min={1} max={5} value={form.rating} onChange={(e) => setForm({ ...form, rating: parseInt(e.target.value) || 5 })} />
+            </div>
           </div>
           <Textarea placeholder="Course description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} />
+          <Textarea placeholder={"What you'll learn (1 line = 1 point)\nExample:\nMeta campaign structure\nCreative testing\nScaling strategy"} value={form.learn_points} onChange={(e) => setForm({ ...form, learn_points: e.target.value })} rows={4} />
           <div className="flex items-center gap-4">
             <label className="flex items-center gap-2 text-sm cursor-pointer"><input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} /> Published</label>
             <Button onClick={() => saveMutation.mutate()} disabled={!form.title || saveMutation.isPending}><Check size={14} className="mr-1" /> {editId ? "Update" : "Create"}</Button>
